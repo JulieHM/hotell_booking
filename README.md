@@ -7,3 +7,4 @@
  - Anders Fredriksen
  - Magnus Krumbacher
  - Airin Thodesen
+ - Stephanie Dias Chelliah
