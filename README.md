@@ -2,3 +2,4 @@
 
 ## Contributors
  - Andreas Bjelland Berg
+ - Siw Døvle
