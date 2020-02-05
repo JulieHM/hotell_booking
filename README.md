@@ -6,3 +6,4 @@
  - Julie Holte Motland
  - Anders Fredriksen
  - Magnus Krumbacher
+ - Airin Thodesen
