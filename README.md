@@ -5,3 +5,4 @@
  - Siw Døvle
  - Julie Holte Motland
  - Anders Fredriksen
+ - Magnus Krumbacher
