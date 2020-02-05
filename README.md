@@ -4,3 +4,4 @@
  - Andreas Bjelland Berg
  - Siw Døvle
  - Julie Holte Motland
+ - Anders Fredriksen
