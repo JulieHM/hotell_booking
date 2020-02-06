@@ -1,0 +1,15 @@
+##### Requirements #####
+
+Django==3.0.3
+mysqlclient==1.4.6
+
+
+
+##### Sub-requirements (as required by the above) #####
+## Should be commented out, as they are automatically included in the above
+## Mostly for tracking changes, I guess? Could maybe get deleted as well
+
+## asgiref==3.2.3
+## pkg-resources==0.0.0
+## pytz==2019.3
+## sqlparse==0.3.0
