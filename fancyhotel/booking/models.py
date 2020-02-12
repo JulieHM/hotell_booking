@@ -7,17 +7,17 @@ from django.core.validators import MinValueValidator
 class Hotelroom(models.Model):
     roomNumber = models.IntegerField(unique=True,
                                     validators=[MinValueValidator(101,message="Room number must be three digits (i.e. 101)")])
-    singleBeds = models.IntegerField(default=0)
-    doubleBeds = models.IntegerField(default=0)
+    numberOfBeds = models.IntegerField()
     pricePrNight = models.IntegerField()
+    singleBeds = models.IntegerField(default=0)
     includedBreakfast = models.BooleanField(default = True)
     includedParking = models.BooleanField(default = True)
     includedCancelling = models.BooleanField(default = False)
     smokingAllowed = models.BooleanField(default = False)
 
     @property
-    def numberOfBeds(self):
-        return self.singleBeds + 2 * self.doubleBeds
+    def doubleBeds(self):
+        return (self.numberOfBeds - self.singleBeds) / 2
 
     @property
     def floor(self):
