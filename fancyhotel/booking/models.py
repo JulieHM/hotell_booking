@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.core.exceptions import ValidationError
+from django.db.models import Q
 
 # Create your models here.
 
@@ -59,6 +61,27 @@ class Booking(models.Model):
 
     class Meta:
         ordering = ['dateStart', 'dateEnd', 'room']
+
+
+    def clean(self):
+        """Ensure startDate > endDate
+        and that the room has not been booked in the same time period"""
+
+        if self.dateEnd <= self.dateStart:
+            raise ValidationError("Start date must be before end date!")
+        
+        # If there are bookings in the database with:
+        # - same room__id
+        # - different booking__id
+        # - first date at or after dateStart (but before dateEnd)
+        # - last date at or before dateEnd (but after dateStart)
+        # Raise ValidationError
+        if Booking.objects.filter(room__id=self.room_id).exclude(pk=self.pk).filter(
+                Q(dateStart__gte=self.dateStart, dateStart__lt=self.dateEnd) | 
+                Q(dateEnd__gt=self.dateStart, dateEnd__lte=self.dateEnd)
+                ).exists():
+            raise ValidationError("Overlapping dates, room has been booked.")
+
 
     def __str__(self):
         return F"Room {self.room}: {self.dateStart} - {self.dateEnd}"
