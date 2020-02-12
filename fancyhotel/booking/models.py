@@ -1,14 +1,12 @@
 from django.db import models
-from django.core.validators import MinLengthValidator, MaxLengthValidator
+from django.core.validators import MinValueValidator
 
 # Create your models here.
 
 ########################### HOTELROOM ###########################
 class Hotelroom(models.Model):
-    floor = models.IntegerField(default=1)
-    numberOnFloor = models.IntegerField(default=1,
-                                        validators=[MinLengthValidator(2, message="Ensure numberOnFloor has two digits (00-99)"),
-                                                    MaxLengthValidator(2, message="Ensure numberOnFloor has two digits (00-99)")])
+    roomNumber = models.IntegerField(unique=True,
+                                    validators=[MinValueValidator(101,message="Room number must be three digits (i.e. 101)")])
     singleBeds = models.IntegerField(default=0)
     doubleBeds = models.IntegerField(default=0)
     pricePrNight = models.IntegerField()
@@ -21,11 +19,12 @@ class Hotelroom(models.Model):
     def numberOfBeds(self):
         return self.singleBeds + 2 * self.doubleBeds
 
-    class Meta:
-        models.UniqueConstraint(fields=['floor', 'numberOnFloor'], name='unique_room_on_floor')
+    @property
+    def floor(self):
+        return int(str(self.roomNumber)[0])
 
     def __str__(self):
-        return F"{self.floor}{self.numberOnFloor}"
+        return F"{self.roomNumber}"
 
 
 
