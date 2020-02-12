@@ -23,6 +23,9 @@ class Hotelroom(models.Model):
     def floor(self):
         return int(str(self.roomNumber)[0])
 
+    class Meta:
+        ordering = ['roomNumber']
+
     def __str__(self):
         return F"{self.roomNumber}"
 
@@ -34,6 +37,9 @@ class Customer(models.Model):
     lastName = models.CharField(max_length=40)
     email = models.EmailField(unique=True)
     phoneNr = models.CharField(max_length=8)
+
+    class Meta:
+        ordering = ['lastName', 'firstName']
 
     def __str__(self):
         return F"{self.lastName},  {self.firstName}"
@@ -50,6 +56,9 @@ class Booking(models.Model):
     phoneNr = models.CharField(max_length=8)
     dateStart = models.DateField(verbose_name="Start date")
     dateEnd = models.DateField(verbose_name="End date")
+
+    class Meta:
+        ordering = ['dateStart', 'dateEnd', 'room']
 
     def __str__(self):
         return F"Room {self.room}: {self.dateStart} - {self.dateEnd}"
