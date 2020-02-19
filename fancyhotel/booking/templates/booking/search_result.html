@@ -1,0 +1,9 @@
+<form action="" method="post">
+    {% csrf_token %}
+    <h1>Search results</h1>
+    <ul>
+    {% for room in rooms %}
+        <li>{{room.roomNumber}}</li>
+    {% endfor %}
+    </ul>
+</form>
