@@ -1,5 +1,21 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    return render(request, 'index.html')
+
+def home(request):
+    return render(request, 'home.html')
+
+def about(request):
+    return render(request, 'about.html')
+
+def login(request):
+    return render(request, 'login.html')
+
+def roombooking(request):
+    return render(request, 'roombooking.html')
+
+def roomoverview(request):
+    return render(request, 'roomoverview.html')
