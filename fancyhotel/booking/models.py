@@ -43,7 +43,7 @@ class Customer(models.Model):
 ########################### BOOKING ###########################
 class Booking(models.Model):
     room = models.ForeignKey(Hotelroom, on_delete=models.PROTECT)
-    customerID = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
+    customerID = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
     firstName = models.CharField(max_length=20)
     lastName = models.CharField(max_length=40)
     email = models.EmailField()
