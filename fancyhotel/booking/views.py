@@ -6,10 +6,23 @@ from .forms import SearchForm
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the booking index.")
+    return render(request, 'booking/base.html')
+
+def login(request):
+    return render(request, 'booking/login.html')
+
+def roomoverview(request):
+    return render(request, 'booking/roomoverview.html')
+
+def about(request):
+    return render(request, 'booking/about.html')
 
 def room(request, roomNr):
     return HttpResponse("You are looking at room %s." % roomNr)
+
+
+
+
 
 def getRooms(request):
     # If method == POST - process form data
@@ -45,3 +58,6 @@ def getRooms(request):
     else:
         form = SearchForm()
         return render(request, 'booking/search.html', {'form': form})
+
+
+
