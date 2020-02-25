@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.db.models import Q
 from .models import Hotelroom, Booking
-from .forms import SearchForm
+from .forms import SearchForm, BookingForm
 
 
 def index(request):
@@ -18,7 +18,25 @@ def login(request):
     return render(request, 'login.html')
 
 def roombooking(request):
-    return render(request, 'roombooking.html')
+     # If method == POST - process form data
+    if request.method == 'POST':
+
+        # Create a SearchForm, populate it with data
+        form = BookingForm(request.POST)
+
+        # Check if valid
+        if form.is_valid():
+            # Process data (return Query)
+            return HttpResponseRedirect('room/202/') # TEMP TO TEST
+            
+        # if not valid, return room 404 (for now)
+        else:
+            return HttpResponseRedirect('room/303/')
+    
+    # else (GET or other method) - create blank form
+    else:
+        form = BookingForm()
+        return render(request, 'roombooking.html', {'form': form})
 
 def roomoverview(request):
     return render(request, 'roomoverview.html')
@@ -55,7 +73,7 @@ def getRooms(request):
             
         # if not valid, return room 404 (for now)
         else:
-            return HttpResponseRedirect('/room/404/')
+            return HttpResponseRedirect('room/404/')
     
     # else (GET or other method) - create blank form
     else:
