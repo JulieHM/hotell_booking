@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.db.models import Q
+from django.urls import reverse
 from .models import Hotelroom, Booking
 from .forms import SearchForm, BookingForm
 
@@ -17,6 +18,9 @@ def about(request):
 def login(request):
     return render(request, 'login.html')
 
+def thanks(request):
+    return HttpResponse('Thanks for booking with Fancy!')
+
 def roombooking(request):
      # If method == POST - process form data
     if request.method == 'POST':
@@ -27,9 +31,19 @@ def roombooking(request):
         # Check if valid
         if form.is_valid():
             # Process data (return Query)
-            return HttpResponseRedirect('room/202/') # TEMP TO TEST
+            booking = Booking()
+            booking.room = form.cleaned_data['room']
+            booking.firstName = form.cleaned_data['firstName']
+            booking.lastName = form.cleaned_data['lastName']
+            booking.email = form.cleaned_data['email']
+            booking.phoneNr = form.cleaned_data['phoneNr']
+            booking.dateStart = form.cleaned_data['dateStart']
+            booking.dateEnd = form.cleaned_data['dateEnd']
+            booking.save()
+
+            return HttpResponseRedirect(reverse('thanks')) # TEMP TO TEST
             
-        # if not valid, return room 404 (for now)
+        # if not valid, return room 303 (for now)
         else:
             return HttpResponseRedirect('room/303/')
     

@@ -12,6 +12,8 @@ urlpatterns = [
     
     path('room/', views.getRooms, name='search rooms'),
 
+    path('thanks/', views.thanks, name='thanks'),
+
     #eks: /booking/room/101/
     path('room/<int:roomNr>/', views.room, name='room info'),
 
