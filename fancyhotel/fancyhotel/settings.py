@@ -74,15 +74,35 @@ WSGI_APPLICATION = 'fancyhotel.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'PU',
-        'USER': 'root',
-        'PASSWORD': 'PU40',
-        'HOST': '35.228.168.183', 
+# [START db_setup]
+if os.getenv('GAE_APPLICATION', None):
+    # Running on production App Engine, so connect to Google Cloud SQL using
+    # the unix socket at /cloudsql/<your-cloudsql-connection string>
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': '/cloudsql/durs-3280:europe-north1:pu-server',
+            'USER': 'root',
+            'PASSWORD': 'PU40',
+            'NAME': 'PU',
+        }
     }
-}
+else:
+    # Running locally so connect to either a local MySQL instance or connect
+    # to Cloud SQL via the proxy.  To start the proxy via command line:
+    #    $ cloud_sql_proxy -instances=[INSTANCE_CONNECTION_NAME]=tcp:6544
+    # See https://cloud.google.com/sql/docs/mysql-connect-proxy
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': '35.228.168.183',
+            'PORT': '3306',
+            'NAME': 'PU',
+            'USER': 'root',
+            'PASSWORD': 'PU40',
+        }
+    }
+# [END db_setup]
 
 
 # Password validation
@@ -121,6 +141,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+<<<<<<< HEAD
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
@@ -128,3 +149,9 @@ STATICFILES_DIRS = (
 STATIC_URL = '/static/'
 
 #STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+=======
+# Google App Engine: set static root for local static files
+# https://cloud.google.com/appengine/docs/flexible/python/serving-static-files
+STATIC_URL = '/static/'
+STATIC_ROOT = 'static'
+>>>>>>> master
