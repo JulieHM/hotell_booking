@@ -141,17 +141,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-<<<<<<< HEAD
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
-
-STATIC_URL = '/static/'
-
-#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-=======
 # Google App Engine: set static root for local static files
 # https://cloud.google.com/appengine/docs/flexible/python/serving-static-files
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
->>>>>>> master
