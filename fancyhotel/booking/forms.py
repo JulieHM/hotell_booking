@@ -17,8 +17,6 @@ class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
         exclude = ['customerID']
-<<<<<<< HEAD
-=======
 
 
 
@@ -51,4 +49,3 @@ class AdvancedSearchForm(SearchForm):
     includedParking = forms.BooleanField(required=False, label='Parking included')
     includedCancelling = forms.BooleanField(required=False, label='Free cancelling included')
     smokingAllowed = forms.BooleanField(required=False, label='Smoking allowed')
->>>>>>> master
