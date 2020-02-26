@@ -6,6 +6,7 @@ from .models import Hotelroom, Booking
 from .forms import SearchForm, BookingForm
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login
+from datetime import date, datetime
 
 
 def index(request):
@@ -18,13 +19,26 @@ def thanks(request):
 def roombooking(request, roomNr):
      # If method == POST - process form data
     if request.method == 'POST':
+        # request.POST is immutable, so we have to create an updated request in order to add dates
+        # For this, I refer to this, which is where I found the recipe:
+        # https://stackoverflow.com/questions/18534307/change-a-form-value-before-validation-in-django-form/49296068
+        updated_request = request.POST.copy()
+
+        # Set dateStart and dateEnd from session variables (if applicable)
+        if request.session.get('startDate', None) != None:
+            dateStart = datetime.strptime(request.session['startDate'], "%Y-%m-%d").date()
+            updated_request.update({'dateStart' : dateStart})
+        if request.session.get('endDate', None) != None:
+            dateEnd = datetime.strptime(request.session['endDate'], "%Y-%m-%d").date()
+            updated_request.update({'dateEnd' : dateEnd})
 
         # Create a SearchForm, populate it with data
-        form = BookingForm(request.POST)
+        form = BookingForm(updated_request)
 
         # Check if valid
         if form.is_valid():
             # Process data (return Query)
+
             form.save()
 
             return HttpResponseRedirect(reverse('thanks'))
@@ -32,6 +46,16 @@ def roombooking(request, roomNr):
     # else (GET or other method) - create blank form
     else:
         form = BookingForm()
+
+        if request.session.get('startDate', None) != None:
+            form.fields['dateStart'].disabled = True
+            dateStart = datetime.strptime(request.session['startDate'], "%Y-%m-%d").date()
+            form.fields['dateStart'].initial = dateStart
+        if request.session.get('endDate', None) != None:
+            form.fields['dateEnd'].disabled = True
+            dateEnd = datetime.strptime(request.session['endDate'], "%Y-%m-%d").date()
+            form.fields['dateEnd'].initial = dateEnd
+
     
     # At this point, form is either filled-but-invalid or empty. Either way, it can be rendered
     return render(request, 'booking/roombooking.html', {'form': form})
@@ -70,8 +94,12 @@ def getRooms(request):
             minNumberOfBeds = form.cleaned_data['minNumberOfBeds']
             maxPricePrNight = form.cleaned_data['maxPricePrNight']
 
+            # Set context and session variables to have correct startDate and endDate
             context['startDate'] = startDate
             context['endDate'] = endDate
+
+            request.session['startDate'] = startDate.isoformat()
+            request.session['endDate'] = endDate.isoformat()
 
             rooms = Hotelroom.objects.filter(
                 numberOfBeds__gte=minNumberOfBeds).exclude(

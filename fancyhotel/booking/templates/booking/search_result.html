@@ -15,7 +15,7 @@
             <h1>Ledige rom fra {{startDate}} til {{endDate}}</h1>
             <ul>
             {% for room in rooms %}
-                <li>{{room.roomNumber}}</li>
+                <li><a href={{room.roomNumber}}> {{ room.roomNumber }} </a></li>
             {% endfor %}
             </ul>
         </form>
