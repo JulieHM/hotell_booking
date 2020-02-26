@@ -31,15 +31,7 @@ def roombooking(request):
         # Check if valid
         if form.is_valid():
             # Process data (return Query)
-            booking = Booking()
-            booking.room = form.cleaned_data['room']
-            booking.firstName = form.cleaned_data['firstName']
-            booking.lastName = form.cleaned_data['lastName']
-            booking.email = form.cleaned_data['email']
-            booking.phoneNr = form.cleaned_data['phoneNr']
-            booking.dateStart = form.cleaned_data['dateStart']
-            booking.dateEnd = form.cleaned_data['dateEnd']
-            booking.save()
+            form.save()
 
             return HttpResponseRedirect(reverse('thanks'))
     
