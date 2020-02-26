@@ -34,7 +34,7 @@ def roombooking(request):
         form = BookingForm()
     
     # At this point, form is either filled-but-invalid or empty. Either way, it can be rendered
-    return render(request, 'roombooking.html', {'form': form})
+    return render(request, 'booking/roombooking.html', {'form': form})
 
 
 
@@ -50,11 +50,9 @@ def about(request):
 def room(request, roomNr):
     return HttpResponse("You are looking at room %s." % roomNr)
 
-
-
-
-
 def getRooms(request):
+    context = {}
+
     # If method == POST - process form data
     if request.method == 'POST':
 
@@ -69,6 +67,9 @@ def getRooms(request):
             minNumberOfBeds = form.cleaned_data['minNumberOfBeds']
             maxPricePrNight = form.cleaned_data['maxPricePrNight']
 
+            context['startDate'] = startDate
+            context['endDate'] = endDate
+
             rooms = Hotelroom.objects.filter(
                 numberOfBeds__gte=minNumberOfBeds).exclude(
                 Q(booking__dateEnd__gt=startDate) & Q(booking__dateStart__lt=endDate)).distinct()
@@ -77,13 +78,14 @@ def getRooms(request):
                 rooms.exclude(
                 pricePrNight__gt=maxPricePrNight)
 
-            return render(request, 'booking/search_result.html', {'rooms': rooms})
+            context['rooms'] = rooms
+            return render(request, 'booking/search_result.html', context)
     
     # else (GET or other method) - create blank form
     else:
         form = SearchForm()
-    
-    return render(request, 'booking/search.html', {'form': form})
+
+    return render(request, 'booking/search.html', form)
 
 def signup_user(request):
     if request.method == "POST":

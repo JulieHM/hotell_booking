@@ -12,7 +12,7 @@
     <div class="container">
         <form action="" method="post">
             {% csrf_token %}
-            <h1>Ledige rom for datoene {{startDate}}</h1>
+            <h1>Ledige rom fra {{startDate}} til {{endDate}}</h1>
             <ul>
             {% for room in rooms %}
                 <li>{{room.roomNumber}}</li>
