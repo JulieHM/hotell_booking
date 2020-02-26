@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.urls import reverse
 from .models import Hotelroom, Booking
 from .forms import SearchForm, BookingForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
 def index(request):
@@ -82,3 +83,29 @@ def getRooms(request):
         form = SearchForm()
     
     return render(request, 'booking/search.html', {'form': form})
+
+def signup_user(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            #log the user in
+            return HttpResponse("Signed up successfully!")
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'booking/signup_test.html', {'form': form})
+
+def login_user(request):
+
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            #login the user
+            user = form.get_user()
+            login(request, user)
+            return HttpResponse("Login Successful! Logged in as " + user.get_username())
+    else:
+        form = AuthenticationForm()
+
+    return render(request, "booking/login_test.html", {'form': form})

@@ -21,6 +21,10 @@ urlpatterns = [
 
     path('/about', views.about, name='about'),
 
+    #test-shit
+    path('signup_test/', views.signup_user, name="signup_test"),
+    path('login_test/', views.login_user, name="login_test")
+
 
 ]
 
