@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- to use forms -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#"> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
+        <div id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'search rooms' %}">Rombestilling</a>
+            </li>
+            &nbsp&nbsp&nbsp
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'roomoverview' %}">Romoversikt</a>
+            </li>
+            &nbsp&nbsp&nbsp
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'about' %}">Om oss</a>
+            </li>
+            &nbsp&nbsp&nbsp
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logg inn' %}">Login</a>
+              </li>
+          </ul>
+        </div>
+      </nav>
+
+
+    <header class="jumbotron">
+        <div class="container">
+            <h1>Skikkelig fancy hotell</h1>
+            <p class="lead">Et fancy hotell for fancy folk</p>
+        </div>
+    </header>
+
+    <!-- base.html fungerer som en mal, slik at alle html sidene har samme egenskaper.
+        De to taggene nedenfor (i hvitt) finner man igjen på de andre .html sidene
+        de er mellom disse taggene (på de andre sidene) man kan endre koden-->
+    {% block content %}
+
+    {% endblock %}
+</body>
+</html>

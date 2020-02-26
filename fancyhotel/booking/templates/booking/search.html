@@ -1,5 +1,34 @@
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
-</form>
+{% extends 'booking/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rombestilling</title>
+</head>
+<body>
+    {% load crispy_forms_tags %}
+
+    {% block content %}
+
+    <div class="container">
+        <form action="" method="post" novalidate>
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-6">
+                  {{ form.startDate|as_crispy_field }}
+                </div>
+                <div class="col-6">
+                  {{ form.endDate|as_crispy_field }}
+                </div>
+              </div>
+              {{ form.minNumberOfBeds|as_crispy_field }}
+              {{ form.maxPricePrNight|as_crispy_field }}
+            <!--<input type="submit" value="Submit">  -->
+            <button type="submit" class="btn btn-success">Se tilgjengelighet</button>    
+        </form>
+    </div>
+    {% endblock %}
+    
+</body>
+</html>

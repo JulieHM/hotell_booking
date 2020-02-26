@@ -7,19 +7,11 @@ from .forms import SearchForm, BookingForm
 
 
 def index(request):
-    return render(request, 'index.html')
-
-def home(request):
-    return render(request, 'home.html')
-
-def about(request):
-    return render(request, 'about.html')
-
-def login(request):
-    return render(request, 'login.html')
+    return render(request, 'booking/index.html')
 
 def thanks(request):
     return HttpResponse('Thanks for booking with Fancy!')
+
 
 def roombooking(request):
      # If method == POST - process form data
@@ -42,12 +34,23 @@ def roombooking(request):
     # At this point, form is either filled-but-invalid or empty. Either way, it can be rendered
     return render(request, 'roombooking.html', {'form': form})
 
-def roomoverview(request):
-    return render(request, 'roomoverview.html')
 
+
+def login(request):
+    return render(request, 'booking/login.html')
+
+def roomoverview(request):
+    return render(request, 'booking/roomoverview.html')
+
+def about(request):
+    return render(request, 'booking/about.html')
 
 def room(request, roomNr):
     return HttpResponse("You are looking at room %s." % roomNr)
+
+
+
+
 
 def getRooms(request):
     # If method == POST - process form data

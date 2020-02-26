@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -145,3 +146,7 @@ USE_TZ = True
 # https://cloud.google.com/appengine/docs/flexible/python/serving-static-files
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
+
+
+#For crispy forms
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

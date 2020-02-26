@@ -1,0 +1,30 @@
+{% extends 'booking/base.html' %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <!-- for responsive design -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>!</title>
+</head>
+
+<body>
+    {% block content %}
+
+  <!-- date picker -->
+  <div class="container">
+    <form action="" method="post" novalidate>
+      {% csrf_token %}
+      <ul>{{ form.as_ul }}</ul>
+
+      <!--<input type="submit" value="Submit">  -->
+      <button type="submit" class="btn btn-success">Book rom</button>
+    </form>
+  </div>
+
+  {% endblock %}
+
+</body>
+
+</html>
