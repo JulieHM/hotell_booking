@@ -14,7 +14,10 @@ urlpatterns = [
     path('room/<int:roomNr>/', views.room, name='room info'),
 
     #booking/login gir login siden
-    path('login/', views.login, name='logg inn'),
+    path('login/', views.login_user, name='logg inn'),
+
+    #gir registrer siden 
+    path('login/booking/signup_test.html', views.signup_user, name="sign up"),
 
     #booking/roomoverview gir romoversikt siden
     path('/roomoverview', views.roomoverview, name='roomoverview'),
@@ -22,8 +25,8 @@ urlpatterns = [
     path('/about', views.about, name='about'),
 
     #test-shit
-    path('signup_test/', views.signup_user, name="signup_test"),
-    path('login_test/', views.login_user, name="login_test")
+    #path('signup_test/', views.signup_user, name="signup_test"),
+    #path('login_test/', views.login_user, name="login_test")
 
 
 ]

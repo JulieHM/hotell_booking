@@ -38,8 +38,8 @@ def roombooking(request):
 
 
 
-def login1(request):
-    return render(request, 'booking/login.html')
+#def login(request):
+    #return render(request, 'booking/login.html')
 
 def roomoverview(request):
     return render(request, 'booking/roomoverview.html')

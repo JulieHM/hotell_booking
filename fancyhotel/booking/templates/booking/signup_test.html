@@ -1,5 +1,24 @@
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
-</form>
+{% extends 'booking/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% load crispy_forms_tags %}
+    {% block content %}
+    <div class="container">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form | crispy }}
+            <!-- <input type="submit" value="Submit" > -->
+            <button type="sumbit" class="btn btn-secondary">Registrer</button>
+        </form>
+    </div>
+    {% endblock %}
+    
+</body>
+</html>
+

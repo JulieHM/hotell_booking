@@ -2,6 +2,7 @@ from django import forms
 from .models import Customer, Booking
 
 
+
 ########################### CUSTOMER ###########################
 class CustomerForm(forms.ModelForm):
     """Used for creating new customers"""
