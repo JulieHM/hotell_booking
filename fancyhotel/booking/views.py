@@ -5,6 +5,7 @@ from django.urls import reverse
 from .models import Hotelroom, Booking
 from .forms import SearchForm, BookingForm
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import login
 
 
 def index(request):
@@ -37,7 +38,7 @@ def roombooking(request):
 
 
 
-def login(request):
+def login1(request):
     return render(request, 'booking/login.html')
 
 def roomoverview(request):
