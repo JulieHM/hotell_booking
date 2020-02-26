@@ -46,25 +46,15 @@
   <div class="container">
     <form action="" method="post" novalidate>
       {% csrf_token %}
-      <div class="row">
-        <div class="col-6">
-          {{ form.dateStart}}
-        </div>
-        <div class="col-6">
-          {{ form.dateEnd}}
-        </div>
-      </div>
-      {{ form.room}}
-      {{ form.firstName}}
-      {{ form.lastName}}
-      {{ form.email}}
-      {{ form.phoneNr}}
+      <ul>{{ form.as_ul }}</ul>
+
       <!--<input type="submit" value="Submit">  -->
-      <button type="submit" class="btn btn-success">Se tilgjengelighet</button>
+      <button type="submit" class="btn btn-success">Book rom</button>
     </form>
   </div>
 
-
+<!-- 
+  NO LONGER NEEDED, KEPT FOR INSPIRATION. DELETE WHEN THE FORM IS RENDERED IN A NICE-LOOKING WAY!
 
   <div class="container">
     <form action="/action_page.php">
@@ -87,7 +77,7 @@
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <input type="submit" value="Se ledige rom">
     </form>
-  </div>
+  </div> -->
 
 
   <!-- Optional JavaScript -->

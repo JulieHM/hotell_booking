@@ -18,6 +18,8 @@ class BookingForm(forms.ModelForm):
         model = Booking
         exclude = ['customerID']
 
+    # Cleaning is done in the class itself (booking.models.Booking)
+
 
 
 ########################### SEARCH FOR ROOM ###########################

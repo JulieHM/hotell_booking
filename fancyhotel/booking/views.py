@@ -41,16 +41,14 @@ def roombooking(request):
             booking.dateEnd = form.cleaned_data['dateEnd']
             booking.save()
 
-            return HttpResponseRedirect(reverse('thanks')) # TEMP TO TEST
-            
-        # if not valid, return room 303 (for now)
-        else:
-            return HttpResponseRedirect('room/303/')
+            return HttpResponseRedirect(reverse('thanks'))
     
     # else (GET or other method) - create blank form
     else:
         form = BookingForm()
-        return render(request, 'roombooking.html', {'form': form})
+    
+    # At this point, form is either filled-but-invalid or empty. Either way, it can be rendered
+    return render(request, 'roombooking.html', {'form': form})
 
 def roomoverview(request):
     return render(request, 'roomoverview.html')
@@ -76,20 +74,16 @@ def getRooms(request):
 
             rooms = Hotelroom.objects.filter(
                 numberOfBeds__gte=minNumberOfBeds).exclude(
-                id__in=Booking.objects.exclude(
-                Q(dateEnd__lte=startDate)|Q(dateStart__gte=endDate))).distinct()
+                Q(booking__dateEnd__gt=startDate) & Q(booking__dateStart__lt=endDate)).distinct()
 
             if maxPricePrNight != None:
                 rooms.exclude(
                 pricePrNight__gt=maxPricePrNight)
 
             return render(request, 'booking/search_result.html', {'rooms': rooms})
-            
-        # if not valid, return room 404 (for now)
-        else:
-            return HttpResponseRedirect('room/404/')
     
     # else (GET or other method) - create blank form
     else:
         form = SearchForm()
-        return render(request, 'booking/search.html', {'form': form})
+    
+    return render(request, 'booking/search.html', {'form': form})

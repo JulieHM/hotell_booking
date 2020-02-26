@@ -77,8 +77,7 @@ class Booking(models.Model):
         # - last date at or before dateEnd (but after dateStart)
         # Raise ValidationError
         if Booking.objects.filter(room__id=self.room_id).exclude(pk=self.pk).filter(
-                Q(dateStart__gte=self.dateStart, dateStart__lt=self.dateEnd) | 
-                Q(dateEnd__gt=self.dateStart, dateEnd__lte=self.dateEnd)
+                Q(dateEnd__gt=self.dateStart, dateStart__lt=self.dateEnd)
                 ).exists():
             raise ValidationError("Overlapping dates, room has been booked.")
 
