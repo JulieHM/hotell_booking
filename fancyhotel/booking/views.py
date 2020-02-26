@@ -15,7 +15,7 @@ def thanks(request):
     return HttpResponse('Thanks for booking with Fancy!')
 
 
-def roombooking(request):
+def roombooking(request, roomNr):
      # If method == POST - process form data
     if request.method == 'POST':
 
@@ -48,16 +48,19 @@ def about(request):
     return render(request, 'booking/about.html')
 
 def room(request, roomNr):
-    return HttpResponse("You are looking at room %s." % roomNr)
+    room = Hotelroom.objects.get(roomNumber=roomNr)
+    context = {'room': room,}
+    return render(request, 'booking/room.html', context)
 
 def getRooms(request):
-    context = {}
+    context = dict()
 
     # If method == POST - process form data
     if request.method == 'POST':
 
         # Create a SearchForm, populate it with data
         form = SearchForm(request.POST)
+        context['form'] = form
 
         # Check if valid
         if form.is_valid():
@@ -85,7 +88,9 @@ def getRooms(request):
     else:
         form = SearchForm()
 
-    return render(request, 'booking/search.html', form)
+    context['form'] = form
+
+    return render(request, 'booking/search.html', context)
 
 def signup_user(request):
     if request.method == "POST":
