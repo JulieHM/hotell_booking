@@ -24,6 +24,9 @@ def roombooking(request, roomNr):
         # https://stackoverflow.com/questions/18534307/change-a-form-value-before-validation-in-django-form/49296068
         updated_request = request.POST.copy()
 
+        # Set room from URL
+        updated_request.update({'room' : Hotelroom.objects.get(roomNumber=roomNr)})
+
         # Set dateStart and dateEnd from session variables (if applicable)
         if request.session.get('startDate', None) != None:
             dateStart = datetime.strptime(request.session['startDate'], "%Y-%m-%d").date()
@@ -47,6 +50,11 @@ def roombooking(request, roomNr):
     else:
         form = BookingForm()
 
+        # Lock room Number
+        form.fields['room'].disabled = True
+        form.fields['room'].initial = Hotelroom.objects.get(roomNumber=roomNr)
+
+        # Lock dates
         if request.session.get('startDate', None) != None:
             form.fields['dateStart'].disabled = True
             dateStart = datetime.strptime(request.session['startDate'], "%Y-%m-%d").date()
