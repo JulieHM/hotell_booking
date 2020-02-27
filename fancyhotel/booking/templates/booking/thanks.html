@@ -1,0 +1,40 @@
+{% extends 'booking/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanks</title>
+</head>
+<body>
+
+    {% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6">
+              <div class="card mb-3">
+                <!-- <img class="card-img-top" src="https://g.acdn.no/obscura/API/dynamic/r1/escenic/tr_1080_607_l_f/0000/archive/04722/hotellrom_4722942a.jpg?chk=35B80F" alt="Card image cap"> -->
+                <div class="card-body">
+                  <h3 class="card-title">Thank you for booking room {{ roomNr }}</h3>
+                  <p class="card-text">We look forward to seeing on {{ startDate }}</p>
+                  <p class="card-text"><i>You booked the room from {{ startDate }} to {{ endDate }}</i></p>
+                
+                </div>
+              </div>
+            </div>
+          
+            <div class="col-xs-6">
+              
+              </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  {% endblock %}
+  
+  
+
+    
+</body>
+</html>

@@ -13,7 +13,12 @@ def index(request):
     return render(request, 'booking/index.html')
 
 def thanks(request):
-    return HttpResponse('Thanks for booking with Fancy!')
+    context = {
+        'roomNr' : request.session.get('roomNr'),
+        'startDate' : request.session.get('startDate'),
+        'endDate' : request.session.get('endDate'),
+        }
+    return render(request, 'booking/thanks.html', context)
 
 
 def roombooking(request, roomNr):
@@ -43,6 +48,7 @@ def roombooking(request, roomNr):
             # Process data (return Query)
 
             form.save()
+            request.session['roomNr'] = roomNr
 
             return HttpResponseRedirect(reverse('thanks'))
     
