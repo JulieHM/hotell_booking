@@ -43,6 +43,19 @@ def roombooking(request, roomNr):
             dateEnd = datetime.strptime(request.session['endDate'], "%Y-%m-%d").date()
             updated_request.update({'dateEnd' : dateEnd})
 
+         # Check if name or email has changed. If not, ensure it is user first_ and last_name and email
+        if request.user.is_authenticated:
+            email = request.user.email
+            firstName = request.user.first_name
+            lastName = request.user.last_name
+
+            if updated_request['email'] != email:
+                updated_request.update({'email' : email})
+            if updated_request['firstName'] != firstName:
+                updated_request.update({'firstName' : firstName})
+            if updated_request['lastName'] != lastName:
+                updated_request.update({'lastName' : lastName})
+
         # Create a SearchForm, populate it with data
         form = BookingForm(updated_request)
 
@@ -72,6 +85,12 @@ def roombooking(request, roomNr):
             form.fields['dateEnd'].disabled = True
             dateEnd = datetime.strptime(request.session['endDate'], "%Y-%m-%d").date()
             form.fields['dateEnd'].initial = dateEnd
+
+        # If user is logged in / authenticated - populate fields with name and email
+        if request.user.is_authenticated:
+            form.fields['email'].initial = request.user.username
+            form.fields['firstName'].initial = request.user.first_name
+            form.fields['lastName'].initial = request.user.last_name
 
     
     # At this point, form is either filled-but-invalid or empty. Either way, it can be rendered
