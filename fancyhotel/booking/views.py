@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.db.models import Q
 from django.urls import reverse
 from .models import Hotelroom, Booking
-from .forms import SearchForm, BookingForm
+from .forms import SearchForm, BookingForm, UserCreateForm
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login
 from datetime import date, datetime
@@ -136,13 +136,13 @@ def getRooms(request):
 
 def signup_user(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = UserCreateForm(request.POST)
         if form.is_valid():
             form.save()
             #log the user in
             return HttpResponse("Signed up successfully!")
     else:
-        form = UserCreationForm()
+        form = UserCreateForm()
 
     return render(request, 'booking/signup_test.html', {'form': form})
 

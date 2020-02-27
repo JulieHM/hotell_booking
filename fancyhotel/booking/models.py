@@ -48,6 +48,36 @@ class Customer(models.Model):
 
 
 
+# ########################### CUSTOM_USER ###########################
+# Commented out for now, as I am to tired to implement it properly
+# For more information, see comments at forms.UserCreateForm
+# class custom_user(models.AbstractBaseUser):
+#     first_name = models.CharField(max_length=20)
+#     last_name = models.CharField(max_length=40)
+#     email = models.EmailField(unique=True)
+#     phone_number = models.CharField(max_length=8)
+
+#     USERNAME_FIELD = 'email'
+#     EMAIL_FIELD = 'email'
+#     REQUIRED_FIELDS = ['first_name', 'last_name']
+
+#     def is_active(self):
+#         return True
+
+#     def get_full_name(self):
+#         return __str__(self)
+
+#     def get_short_name(self):
+#         return self.first_name
+
+#     class Meta:
+#         ordering = ['lastname', 'firstname']
+    
+#     def __str__(self):
+#         return F"{self.last_name}, {self.first_name}"
+
+
+
 ########################### BOOKING ###########################
 class Booking(models.Model):
     room = models.ForeignKey(Hotelroom, on_delete=models.PROTECT)
@@ -55,7 +85,7 @@ class Booking(models.Model):
     firstName = models.CharField(max_length=20)
     lastName = models.CharField(max_length=40)
     email = models.EmailField()
-    phoneNr = models.CharField(max_length=8)
+    phoneNr = models.CharField(max_length=8, null=True, blank=True)
     dateStart = models.DateField(verbose_name="Start date")
     dateEnd = models.DateField(verbose_name="End date")
 
