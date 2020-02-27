@@ -16,6 +16,7 @@ urlpatterns = [
 
     #booking/login gir login siden
     path('login/', views.login_user, name='logg inn'),
+    path('logout/', views.logout_user, name='logg ut'),
 
     #gir registrer siden 
     path('login/booking/signup_test.html', views.signup_user, name="sign up"),

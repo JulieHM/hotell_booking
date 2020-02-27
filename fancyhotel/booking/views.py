@@ -5,12 +5,14 @@ from django.urls import reverse
 from .models import Hotelroom, Booking
 from .forms import SearchForm, BookingForm, UserCreateForm
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import login
+from django.contrib.auth import authenticate, login, logout
 from datetime import date, datetime
 
 
 def index(request):
     return render(request, 'booking/index.html')
+
+
 
 def thanks(request):
     context = {
@@ -19,6 +21,7 @@ def thanks(request):
         'endDate' : request.session.get('endDate'),
         }
     return render(request, 'booking/thanks.html', context)
+
 
 
 def roombooking(request, roomNr):
@@ -79,16 +82,24 @@ def roombooking(request, roomNr):
 #def login(request):
     #return render(request, 'booking/login.html')
 
+
+
 def roomoverview(request):
     return render(request, 'booking/roomoverview.html')
 
+
+
 def about(request):
     return render(request, 'booking/about.html')
+
+
 
 def room(request, roomNr):
     room = Hotelroom.objects.get(roomNumber=roomNr)
     context = {'room': room,}
     return render(request, 'booking/room.html', context)
+
+
 
 def getRooms(request):
     context = dict()
@@ -134,28 +145,53 @@ def getRooms(request):
 
     return render(request, 'booking/search.html', context)
 
+
+
 def signup_user(request):
+    """Sign up user, and automatically log in"""
     if request.method == "POST":
         form = UserCreateForm(request.POST)
         if form.is_valid():
             form.save()
+
             #log the user in
-            return HttpResponse("Signed up successfully!")
+            # Get user type
+            username = request.POST['email']
+            password = request.POST['password1']
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                # The user actually exists - SHOULD ALWAYS BE TRUE!!!
+                login(request, user)
+                
+                return HttpResponseRedirect(reverse('index'))
+
+            else:
+                # SHOULD NEVER HAPPEN!
+                raise ValueError('Something went wrong!')
     else:
         form = UserCreateForm()
 
     return render(request, 'booking/signup_test.html', {'form': form})
 
-def login_user(request):
 
+
+def login_user(request):
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
             #login the user
             user = form.get_user()
             login(request, user)
-            return HttpResponse("Login Successful! Logged in as " + user.get_username())
+
+            return HttpResponseRedirect(reverse('index'))
     else:
         form = AuthenticationForm()
 
     return render(request, "booking/login_test.html", {'form': form})
+
+
+
+def logout_user(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('index'))

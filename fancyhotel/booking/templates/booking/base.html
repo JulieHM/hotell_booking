@@ -29,9 +29,15 @@
               <a class="nav-link" href="{% url 'about' %}">Om oss</a>
             </li>
             &nbsp&nbsp&nbsp
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logg ut' %}">Logged in as {{ user.get_short_name }}. Click here to log out.</a>
+              </li>
+            {% else %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'logg inn' %}">Login</a>
               </li>
+            {% endif %}
           </ul>
         </div>
       </nav>

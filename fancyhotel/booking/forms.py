@@ -22,6 +22,8 @@ class UserCreateForm(UserCreationForm):
     # I'm going to keep the model custom_user (only commented out), which may be used for this exact
     # purpose, but I simply do not have the energy to deal with it right now...
 
+    # Inspired by: http://jessenoller.com/blog/2011/12/19/quick-example-of-extending-usercreationform-in-django
+
     email = forms.EmailField(required = True)
     first_name = forms.CharField(max_length=20, required=True)
     last_name = forms.CharField(max_length=40, required=True)
