@@ -49,11 +49,11 @@ def roombooking(request, roomNr):
             firstName = request.user.first_name
             lastName = request.user.last_name
 
-            if updated_request['email'] != email:
+            if updated_request['email'] in [None, '']:
                 updated_request.update({'email' : email})
-            if updated_request['firstName'] != firstName:
+            if updated_request['firstName']  in [None, '']:
                 updated_request.update({'firstName' : firstName})
-            if updated_request['lastName'] != lastName:
+            if updated_request['lastName']  in [None, '']:
                 updated_request.update({'lastName' : lastName})
 
         # Create a SearchForm, populate it with data
