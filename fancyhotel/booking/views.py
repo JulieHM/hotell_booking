@@ -65,6 +65,11 @@ def roombooking(request, roomNr):
 
             form.save()
             request.session['roomNr'] = roomNr
+            
+            if not request.user.is_authenticated:
+                request.session['email'] = email
+                request.session['firstName'] = firstName
+                request.session['lastName'] = lastName
 
             return HttpResponseRedirect(reverse('thanks'))
     
@@ -169,7 +174,18 @@ def getRooms(request):
 def signup_user(request):
     """Sign up user, and automatically log in"""
     if request.method == "POST":
-        form = UserCreateForm(request.POST)
+        # Copy POST request (see comments in roombooking)
+        updated_request = request.POST.copy()
+
+        # If values have not been changed and they are initialized to be stored values - insert stored values
+        if updated_request['email'] in [None, ''] & request.session.get('email', None) != None:
+            updated_request.update({'email' : request.session.get('email')})
+        if updated_request['firstName']  in [None, ''] & request.session.get('firstName', None) != None:
+            updated_request.update({'firstName' : request.session.get('firstName')})
+        if updated_request['lastName']  in [None, ''] & request.session.get('lastName', None) != None:
+            updated_request.update({'lastName' : request.session.get('lastName')})
+
+        form = UserCreateForm(updated_request)
         if form.is_valid():
             form.save()
 
@@ -190,6 +206,14 @@ def signup_user(request):
                 raise ValueError('Something went wrong!')
     else:
         form = UserCreateForm()
+
+        # If user information is stored in session - set initial values to be stored values
+        if request.session.get('email', None) != None:
+            form.fields['username'].initial = request.session.get('email')
+        if request.session.get('firstName', None) != None:
+            form.fields['first_name'].initial = request.session.get('firstName')
+        if request.session.get('lastName', None) != None:
+            form.fields['last_name'].initial = request.session.get('lastName')
 
     return render(request, 'booking/signup_test.html', {'form': form})
 
