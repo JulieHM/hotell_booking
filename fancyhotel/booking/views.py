@@ -67,9 +67,12 @@ def roombooking(request, roomNr):
             request.session['roomNr'] = roomNr
             
             if not request.user.is_authenticated:
-                request.session['email'] = email
-                request.session['firstName'] = firstName
-                request.session['lastName'] = lastName
+                request.session['email'] = form.cleaned_data['email']
+                request.session['firstName'] = form.cleaned_data['firstName']
+                request.session['lastName'] = form.cleaned_data['lastName']
+
+                if 'submit_and_register' in request.POST:
+                    return HttpResponseRedirect(reverse('sign up'))
 
             return HttpResponseRedirect(reverse('thanks'))
     
@@ -209,7 +212,7 @@ def signup_user(request):
 
         # If user information is stored in session - set initial values to be stored values
         if request.session.get('email', None) != None:
-            form.fields['username'].initial = request.session.get('email')
+            form.fields['email'].initial = request.session.get('email')
         if request.session.get('firstName', None) != None:
             form.fields['first_name'].initial = request.session.get('firstName')
         if request.session.get('lastName', None) != None:
