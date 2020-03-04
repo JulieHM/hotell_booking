@@ -202,11 +202,11 @@ def login_user(request):
             #login the user
             user = form.get_user()
             login(request, user)
-
+            if user.is_staff:
+                return HttpResponseRedirect("/admin/")
             return HttpResponseRedirect(reverse('index'))
     else:
         form = AuthenticationForm()
-
     return render(request, "booking/login_test.html", {'form': form})
 
 

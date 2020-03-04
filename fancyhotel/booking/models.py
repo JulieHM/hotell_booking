@@ -32,7 +32,6 @@ class Hotelroom(models.Model):
         return F"{self.roomNumber}"
 
 
-
 ########################### CUSTOMER ###########################
 class Customer(models.Model):
     firstName = models.CharField(max_length=20)
@@ -91,6 +90,7 @@ class Booking(models.Model):
 
     class Meta:
         ordering = ['dateStart', 'dateEnd', 'room']
+
 
 
     def clean(self):
