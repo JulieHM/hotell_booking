@@ -30,10 +30,14 @@ def thanks(request):
 def email(request):
     subject = 'Bookingbekreftelse'
     message = 'Takk for at du booket rom ' + str(request.session.get('roomNr')) + ' den ' + str(request.session.get('startDate')) + ' - ' + str(request.session.get('endDate'))
-    print(message)
     email_from = settings.EMAIL_HOST_USER
-    recipient_list = [request.user.email, ]
-    send_mail(subject, message, email_from, recipient_list)
+    try:
+        recipient_list = [request.user.email, ]
+        send_mail(subject, message, email_from, recipient_list)
+    except:
+        recipient_list_guest = [request.session['email'], ]
+        send_mail(subject, message, email_from, recipient_list_guest)
+
 
 
 
