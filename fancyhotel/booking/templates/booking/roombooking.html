@@ -20,7 +20,9 @@
 
       <!--<input type="submit" value="Submit">  -->
       <button type="submit" class="btn btn-success" name="submit">Book rom</button>
-      <button type="submit" class="btn btn-success" name="submit_and_register">Book rom og registrer bruker</button>
+      {% if not user.is_authenticated %}
+        <button type="submit" class="btn btn-success" name="submit_and_register">Book rom og registrer bruker</button>
+      {% endif %}
     </form>
   </div>
 
