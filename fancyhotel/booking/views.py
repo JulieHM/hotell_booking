@@ -7,6 +7,8 @@ from .forms import SearchForm, BookingForm, UserCreateForm
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from datetime import date, datetime
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 def index(request):
@@ -20,7 +22,18 @@ def thanks(request):
         'startDate' : request.session.get('startDate'),
         'endDate' : request.session.get('endDate'),
         }
+    email(request)
+
     return render(request, 'booking/thanks.html', context)
+
+
+def email(request):
+    subject = 'Bookingbekreftelse'
+    message = 'Takk for at du booket rom ' + str(request.session.get('roomNr')) + ' den ' + str(request.session.get('startDate')) + ' - ' + str(request.session.get('endDate'))
+    print(message)
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [request.user.email, ]
+    send_mail(subject, message, email_from, recipient_list)
 
 
 
@@ -45,6 +58,7 @@ def roombooking(request, roomNr):
 
          # Check if name or email has changed. If not, ensure it is user first_ and last_name and email
         if request.user.is_authenticated:
+            #global email
             email = request.user.email
             firstName = request.user.first_name
             lastName = request.user.last_name
