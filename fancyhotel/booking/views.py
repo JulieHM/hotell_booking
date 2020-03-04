@@ -181,11 +181,11 @@ def signup_user(request):
         updated_request = request.POST.copy()
 
         # If values have not been changed and they are initialized to be stored values - insert stored values
-        if updated_request['email'] in [None, ''] & request.session.get('email', None) != None:
+        if updated_request.get('email', None) in [None, ''] and request.session.get('email', None) != None:
             updated_request.update({'email' : request.session.get('email')})
-        if updated_request['firstName']  in [None, ''] & request.session.get('firstName', None) != None:
+        if updated_request.get('firstName', None)  in [None, ''] and request.session.get('firstName', None) != None:
             updated_request.update({'firstName' : request.session.get('firstName')})
-        if updated_request['lastName']  in [None, ''] & request.session.get('lastName', None) != None:
+        if updated_request.get('lastName', None)  in [None, ''] and request.session.get('lastName', None) != None:
             updated_request.update({'lastName' : request.session.get('lastName')})
 
         form = UserCreateForm(updated_request)
