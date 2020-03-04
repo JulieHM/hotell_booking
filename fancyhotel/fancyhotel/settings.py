@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import django.core.mail
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -150,3 +152,12 @@ STATIC_ROOT = 'static'
 
 #For crispy forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+#email-settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'anderf2706v4@gmail.com'
+EMAIL_HOST_PASSWORD = 'Brother Martin'
