@@ -118,7 +118,18 @@ def room(request, roomNr):
     context = {'room': room,}
     return render(request, 'booking/room.html', context)
 
+def booking_overview(request):
+    if request.user.is_authenticated:
+        current_user = request.user
+        booking = Booking.objects.filter(email = current_user.email)
+        context = {
+        'bookings': booking
+        }
+    else:
+        context = {
 
+        }
+    return render(request, "booking/minside.html", context)
 
 def getRooms(request):
     context = dict()
@@ -215,6 +226,5 @@ def logout_user(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
 
-def mysite(request):
-    return render(request, 'booking/minside.html')
+
 

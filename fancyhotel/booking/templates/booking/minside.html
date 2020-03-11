@@ -8,6 +8,33 @@
 </head>
 <body>
     {% block content %}
+    <div class="container">
+        <!-- <div class="card mb-3">
+        <div class="card-body"> -->
+        <h1 class="card-title">Du har booket: </h1>
+        </br>
+        <!-- <ul> -->
+            
+        {% for booking in bookings %}
+            <!-- <li class="card-text" style="padding: 0,7%;"> Room: {{ booking.room }} &nbsp&nbsp&nbsp Fra: {{ booking.dateStart }} &nbsp&nbsp&nbsp Til: {{ booking.dateEnd }} </li>  -->
+            <div class="row" style="padding: 0.7%;">
+            <div class="col-sm">
+                Room: {{ booking.room }}
+              </div>
+              <div class="col-sm">
+                Fra: {{ booking.dateStart }}
+              </div>
+              <div class="col-sm">
+                Til: {{ booking.dateEnd }}
+              </div>
+              </div>
+        {% endfor %}
+      <!--   </ul> -->
+        
+         </div>
+<!--     </div>
+</div>    --> 
+
     {% endblock %}
     
 </body>
