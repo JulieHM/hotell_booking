@@ -1,0 +1,98 @@
+body {
+    /*background-color: #C3A088; */
+    /*background-color:#04302F;*/
+    background-color: #8C5135;
+}
+
+p{
+    color: gray;
+    text-align: justify;
+    
+}
+
+img{
+    max-width:100%;
+}
+
+h1{
+    font-family: romantic couple;
+    color: black;
+}
+
+/* container for header slider*/
+.carousel-item{
+   width:100%; /*container-width*/
+   height: 820px;
+   overflow:hidden; /*hide bounds of image */
+   margin:center;   /*reset margin of figure tag*/
+}
+
+/* stiler for bildene inni bilde sliden*/
+.carousel-item img{
+    display:block; /*remove inline-block spaces*/
+    width:100%; /*make image streatch*/
+    
+}
+
+
+
+
+.bilde{
+    display: inline-block;
+    margin-left: 50px;
+    margin-top: -135px;
+    margin-right: 170px;
+    width: 600px;
+    height: 300px;
+    object-fit: cover;
+    overflow: hidden;
+    max-width: 100%;
+
+}
+
+.textbox_left{
+    display: inline-block;
+    background-color: #E6E6E6;
+    position: relative;
+    width: 300px;
+    margin-left: 220px;
+    margin-bottom: 50px;
+    padding: 50px;
+    text-align: justify;  
+}
+
+.textbox_right{
+    background-color: #E6E6E6;
+    width: 300px;
+    position: relative;
+    margin-left: 600px;
+    margin-bottom: 50px;
+    padding: 50px;
+    text-align: justify;  
+    z-index: 1;
+}
+
+.textbox_middle{
+    background-color: #E6E6E6;
+    width: 100%;
+    position: relative;
+    margin: 30%;
+    padding: 50px;
+}
+
+.mapbox {
+    padding: 50px;
+    /* margin-left: 200px;*/
+    margin-bottom: 50px; 
+    margin: auto;
+    text-align: justify;
+    background-color: #E6E6E6;
+    position: static;
+    height: 500px;
+    width: 1000px;
+
+}
+
+
+
+

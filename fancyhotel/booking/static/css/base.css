@@ -1,0 +1,94 @@
+body {
+    /*background-color: #C3A088; */
+    /*background-color:#04302F;*/
+    background-color: #8C5135;
+}
+
+
+img{
+    max-width:100%;
+}
+/* Navbar */ 
+.navbar {
+    transition: all 0.4s;
+}
+
+.navbar .nav-link {
+    color: #fff;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+    color: wheat;
+    text-decoration: none;
+}
+
+.navbar .navbar-brand {
+    color: #fff;
+}
+
+
+/* Change navbar styling on scroll */
+.navbar.active {
+    background: #C3A088;
+    box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar.active .nav-link {
+    color: #555;
+}
+
+.navbar.active .nav-link:hover,
+.navbar.active .nav-link:focus {
+    color: #555;
+    text-decoration: none;
+}
+
+.navbar.active .navbar-brand {
+    color: #555;
+}
+
+/* Change navbar styling on small viewports */
+@media (max-width: 413.98px) {
+    .navbar {
+        background: #fff;
+    }
+
+    .navbar .navbar-brand, .navbar .nav-link {
+        color: #555;
+    }
+}
+
+/* Footer */ 
+footer {
+    background-color: #111111;
+    height: 50px;
+}
+
+/* Used for login and register box headings */
+#content-container h1{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: Arial;
+}
+.wrapper{ 
+    background-color: #8C5135;
+    position: relative;
+}
+
+#content-container{
+    background-color: #E6E6E6;
+    padding: 50px;
+    margin-top: -720px;
+    margin-left: 150px;
+    
+    
+    box-shadow: 1px 2px 10px rgba(0, 0, 0, 3);
+    z-index: 1;
+    position: absolute;
+}
+
+#login-background{
+    position: relative;
+}
+
+

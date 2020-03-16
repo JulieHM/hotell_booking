@@ -7,20 +7,31 @@
     <title>Document</title>
 </head>
 <body>
+    {% load static %} 
+
+    {% block header %}
+    <div>
+        <img class="d-block w-100" src="{% static "img/front.jpeg" %}">
+    </div>
+    {% endblock %}
+
+
     {% load crispy_forms_tags %}
     {% block content %}
-
-    <div class="container">
-        <h3>Logg inn</h3>
-        <form action="" method="post">
-            {% csrf_token %}
-            {{ form | crispy }}
-            <button type="submit" class="btn btn-secondary">Logg inn</button>
+   
             
-        </form>
-        <br><br>
-        <a href="booking/signup_test.html">Registrer deg her</a>
-    </div>
+            <div class="container" id="content-container">
+                <h1>Logg inn</h1>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{ form | crispy }}
+                    <button type="submit" class="btn btn-secondary">Logg inn</button>
+                </form>
+                <br>
+            <a href="booking/signup_test.html">Registrer deg her</a>
+        </div>
+        
+   
 
     {% endblock %}
     
