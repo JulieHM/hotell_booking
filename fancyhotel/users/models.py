@@ -23,15 +23,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     # Flags:
     is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField('Is Staff. Note: Is used IN ADDITION TO is_cleaner or is_investor', default=False)
+        # NOTE: is_staff is used in combination with is_cleaner or is_investor
+    is_staff = models.BooleanField('Works at the hotel', default=False)
     is_cleaner = models.BooleanField('Works as cleaner', default=False)
     is_investor = models.BooleanField('Has investor privileges', default=False)
-    ### is_admin = models.BooleanField('Has admin privileges', default=False)
+        ### is_admin = models.BooleanField('Has admin privileges', default=False)
 
-    # @property
-    # def is_staff():
-    #     """Returns True if user is cleaner or investor"""
-    #     return is_cleaner or is_investor ###or is_admin
 
     # Set 'email' to be used as username
     USERNAME_FIELD = 'email'
