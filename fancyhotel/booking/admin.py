@@ -18,7 +18,7 @@ class BookingAdmin(admin.ModelAdmin):
         )
     )
 
-    list_display = ('room', 'dateStart', 'dateEnd', 'firstName', 'lastName', 'email')
+    list_display = ('room', 'dateStart', 'dateEnd', 'firstName', 'lastName', 'email', 'customerID')
     list_display_links = ('room', 'firstName', 'lastName')
 
     list_filter = ('dateStart', 'dateEnd')

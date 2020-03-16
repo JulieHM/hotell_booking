@@ -1,6 +1,6 @@
 from django import forms
 from .models import Customer, Booking
-from django.contrib.auth.models import User
+from users.models import CustomUser
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -17,39 +17,18 @@ class CustomerForm(forms.ModelForm):
 
 ########################### USER ###########################
 class UserCreateForm(UserCreationForm):
-    # This form - and the current user - does not, at the moment, register and save phone numbers
-    # I'm going to ignore it for now, as it's getting late, but it should probably be looked at later
-    # I'm going to keep the model custom_user (only commented out), which may be used for this exact
-    # purpose, but I simply do not have the energy to deal with it right now...
-
-    # Inspired by: http://jessenoller.com/blog/2011/12/19/quick-example-of-extending-usercreationform-in-django
-
-    email = forms.EmailField(required = True)
-    first_name = forms.CharField(max_length=20, required=True)
-    last_name = forms.CharField(max_length=40, required=True)
+    """Creates an instance of CustomUser"""
 
     class Meta:
-        model = User
-        fields = ('email', 'password1', 'password2', 'first_name', 'last_name')
-
-    def save(self, commit=True):
-        """Save User-class. Save field 'email' as 'username'"""
-        user = super(UserCreateForm, self).save(commit=False)
-
-        # Store values from userform in model
-        user.username = self.cleaned_data['email']
-        user.first_name = self.cleaned_data['first_name']
-        user.last_name = self.cleaned_data['last_name']
-
-        if commit:
-            user.save()
-        return user
+        model = CustomUser
+        fields = ('email', 'password1', 'password2', 'first_name', 'last_name', 'phone_number')
 
 
 
 ########################### BOOKING ###########################
 class BookingForm(forms.ModelForm):
     """Used for creating new bookings"""
+    
     class Meta:
         model = Booking
         exclude = ['customerID']
