@@ -83,15 +83,19 @@ def roombooking(request, roomNr):
         # Check if valid
         if form.is_valid():
             # Process data (return Query)
-
-            form.save()
             request.session['roomNr'] = roomNr
+            request.session['email'] = form.cleaned_data['email']
+            request.session['firstName'] = form.cleaned_data['firstName']
+            request.session['lastName'] = form.cleaned_data['lastName']
+            request.session['phoneNr'] = form.cleaned_data['phoneNr']
+
+            if request.user.is_authenticated:
+                booking = form.save(commit=False)
+                booking.customerID = request.user   # Set Booking.CustomerID = logged in user
+                booking.save()
             
-            if not request.user.is_authenticated:
-                request.session['email'] = form.cleaned_data['email']
-                request.session['firstName'] = form.cleaned_data['firstName']
-                request.session['lastName'] = form.cleaned_data['lastName']
-                request.session['phoneNr'] = form.cleaned_data['phoneNr']
+            else:
+                form.save()
 
                 if 'submit_and_register' in request.POST:
                     return HttpResponseRedirect(reverse('sign up'))
