@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'booking.apps.BookingConfig',
+    'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -106,6 +107,9 @@ else:
         }
     }
 # [END db_setup]
+
+# SET USER TO USE CUSTOM USERS.CUSTOMUSER
+AUTH_USER_MODEL = 'users.CustomUser'
 
 
 # Password validation
