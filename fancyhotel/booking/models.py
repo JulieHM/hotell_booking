@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator
 from django.core.exceptions import ValidationError
 from django.db.models import Q
+from django.conf import settings
 
 # Create your models here.
 
@@ -81,7 +82,7 @@ class Customer(models.Model):
 ########################### BOOKING ###########################
 class Booking(models.Model):
     room = models.ForeignKey(Hotelroom, on_delete=models.PROTECT)
-    customerID = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
+    customerID = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
     firstName = models.CharField(max_length=20)
     lastName = models.CharField(max_length=40)
     email = models.EmailField()

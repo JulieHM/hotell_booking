@@ -66,6 +66,7 @@ def roombooking(request, roomNr):
             email = request.user.email
             firstName = request.user.first_name
             lastName = request.user.last_name
+            phoneNr = request.user.phone_number
 
             if updated_request['email'] in [None, '']:
                 updated_request.update({'email' : email})
@@ -73,6 +74,8 @@ def roombooking(request, roomNr):
                 updated_request.update({'firstName' : firstName})
             if updated_request['lastName']  in [None, '']:
                 updated_request.update({'lastName' : lastName})
+            if updated_request['phoneNr']  in [None, '']:
+                updated_request.update({'phoneNr' : phoneNr})
 
         # Create a SearchForm, populate it with data
         form = BookingForm(updated_request)
@@ -88,6 +91,7 @@ def roombooking(request, roomNr):
                 request.session['email'] = form.cleaned_data['email']
                 request.session['firstName'] = form.cleaned_data['firstName']
                 request.session['lastName'] = form.cleaned_data['lastName']
+                request.session['phoneNr'] = form.cleaned_data['phoneNr']
 
                 if 'submit_and_register' in request.POST:
                     return HttpResponseRedirect(reverse('sign up'))
@@ -114,9 +118,10 @@ def roombooking(request, roomNr):
 
         # If user is logged in / authenticated - populate fields with name and email
         if request.user.is_authenticated:
-            form.fields['email'].initial = request.user.username
+            form.fields['email'].initial = request.user.email
             form.fields['firstName'].initial = request.user.first_name
             form.fields['lastName'].initial = request.user.last_name
+            form.fields['phoneNr'].initial = request.user.phone_number
 
     
     # At this point, form is either filled-but-invalid or empty. Either way, it can be rendered
@@ -201,10 +206,12 @@ def signup_user(request):
         # If values have not been changed and they are initialized to be stored values - insert stored values
         if updated_request.get('email', None) in [None, ''] and request.session.get('email', None) != None:
             updated_request.update({'email' : request.session.get('email')})
-        if updated_request.get('firstName', None)  in [None, ''] and request.session.get('firstName', None) != None:
-            updated_request.update({'firstName' : request.session.get('firstName')})
-        if updated_request.get('lastName', None)  in [None, ''] and request.session.get('lastName', None) != None:
-            updated_request.update({'lastName' : request.session.get('lastName')})
+        if updated_request.get('first_name', None)  in [None, ''] and request.session.get('first_name', None) != None:
+            updated_request.update({'first_name' : request.session.get('firstName')})
+        if updated_request.get('last_name', None)  in [None, ''] and request.session.get('last_name', None) != None:
+            updated_request.update({'last_name' : request.session.get('lastName')})
+        if updated_request.get('phone_number', None)  in [None, ''] and request.session.get('phone_number', None) != None:
+            updated_request.update({'phone_number' : request.session.get('phoneNr')})
 
         form = UserCreateForm(updated_request)
         if form.is_valid():
@@ -212,9 +219,9 @@ def signup_user(request):
 
             #log the user in
             # Get user type
-            username = request.POST['email']
+            email = request.POST['email']
             password = request.POST['password1']
-            user = authenticate(request, username=username, password=password)
+            user = authenticate(request, username=email, password=password)
 
             if user is not None:
                 # The user actually exists - SHOULD ALWAYS BE TRUE!!!
@@ -235,6 +242,8 @@ def signup_user(request):
             form.fields['first_name'].initial = request.session.get('firstName')
         if request.session.get('lastName', None) != None:
             form.fields['last_name'].initial = request.session.get('lastName')
+        if request.session.get('phoneNr', None) != None:
+            form.fields['phone_number'].initial = request.session.get('phoneNr')
 
     return render(request, 'booking/signup_test.html', {'form': form})
 
