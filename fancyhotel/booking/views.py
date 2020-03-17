@@ -10,6 +10,8 @@ from datetime import date, datetime
 from django.core.mail import send_mail
 from django.conf import settings
 
+from users.models import CustomUser 
+
 
 def index(request):
     return render(request, 'booking/index.html')
@@ -157,7 +159,9 @@ def booking_overview(request):
     if request.user.is_authenticated:
         current_user = request.user
         booking = Booking.objects.filter(email = current_user.email)
+        personal_info = CustomUser.objects.filter(email = current_user.email)
         context = {
+        'info': personal_info,
         'bookings': booking
         }
     else:
