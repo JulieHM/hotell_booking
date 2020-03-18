@@ -46,11 +46,15 @@ class BookingOverviewAdmin(admin.ModelAdmin):
     def get_urls(self):
         urls = super().get_urls()
         my_urls = [
-            path('', self.admin_site.admin_view(self.overview)),
+            path('', self.admin_site.admin_view(self.overview_index)),
+            path('<int:NUMBER_OF_DAYS>', self.admin_site.admin_view(self.overview)),
         ]
         return my_urls + urls
 
-    def overview(self, request):
+    def overview_index(self, request):
+        return TemplateResponse(request, 'admin/overview_index.html')
+
+    def overview(self, request, NUMBER_OF_DAYS):
         """
             A view, rendering an HTML-table with rooms as rows and days as columns
 
@@ -62,7 +66,6 @@ class BookingOverviewAdmin(admin.ModelAdmin):
                 }
         """
 
-        NUMBER_OF_DAYS = 7
         busy_dates = {}
         header_row_dates = []
         today = datetime.date.today()
@@ -93,7 +96,7 @@ class BookingOverviewAdmin(admin.ModelAdmin):
             # Loops through start_index + 1 --> end_index, as you might have a booking ending and starting on the same day
             for i in range(start_index + 1, end_index + 1):
                 busy_dates[booking.room.roomNumber][i] = dict(
-                                            name = booking.lastName + ', ' + booking.firstName,
+                                            name = (booking.lastName + ', ' + booking.firstName),
                                             id = booking.id)
 
         context = dict(
