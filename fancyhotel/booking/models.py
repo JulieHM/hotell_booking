@@ -115,3 +115,14 @@ class Booking(models.Model):
 
     def __str__(self):
         return F"Room {self.room}: {self.dateStart} - {self.dateEnd}"
+
+
+
+########################### BOOKING PROXY ###########################
+class BookingOverview(Booking):
+    """Proxy of Booking, to use for admin.overview"""
+    class Meta:
+        proxy = True
+
+    verbose_name = 'Booking Overview'
+    verbose_name_plural = 'Booking Overview'

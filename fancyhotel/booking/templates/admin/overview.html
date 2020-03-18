@@ -1,0 +1,73 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<style>
+    .overview-table-wrapper{
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    .overview-table{
+        color: #333;
+        border-color: #707070;
+    }
+    .overview-header{
+        font-weight: bold;
+        background-color: #f9f9f9;
+    }
+    .overview-row:nth-child(odd){
+        background-color: #fff;
+    }
+    .overview-row:nth-child(even){
+        background-color: #f9f9f9;
+    }
+    .overview-row{
+        color: black;
+        font-weight: normal;
+    }
+    .overview-row:hover{
+        font-weight: bold;
+    }
+    .overview-cell{
+        width: 40px;
+    }
+    .overview-cell-room{
+        width: 200px;
+        text-align: left;
+    }
+    .overview-cell-booked{
+        background-color: red;
+    }
+</style>
+
+<body>
+    <h1>Booking overview</h1>
+    <div class=overview-table-wrapper>
+    <table class="overview-table">
+        <!--Header-->
+            <tr class="overview-header">
+                    <th class="overview-cell-room">Room</th>
+                {% for date in header_row_dates %}
+                    <th class="overview-cell">{{ date }}</th>
+                {% endfor %}
+            </tr>
+
+        <!--Content-->
+        {% for key, value in busy_dates.items %}
+            <tr class="overview-row">
+                <td>{{ key }}</td>
+                {% for status in value %}
+                    {% if status == None %}
+                        <td>-</td>
+                    {% else %}
+                        <td class="overview-cell-booked" title={{ status.name }}>
+                            <a href="http://127.0.0.1:8000/admin/booking/booking/{{ status.id }}" style="display:block;">&nbsp;</a>
+                        </td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+    </div>   
+</body>
+{% endblock %}
