@@ -6,8 +6,10 @@
         display: block;
         overflow-x: auto;
         white-space: nowrap;
+        width: 90%; /* Fallback, if needed */
+        width: calc(100% - 5em);
     }
-    .overview-table{
+    .overview-table, .overview-col-first{
         color: #333;
         border-color: #707070;
     }
@@ -15,10 +17,16 @@
         font-weight: bold;
         background-color: #f9f9f9;
     }
-    .overview-row:nth-child(odd){
-        background-color: #fff;
+    .overview-col-first{
+        float: left;
+        width: 5em;
+        border-right: 1px solid #f9f9f9;
+        text-align: left;
     }
     .overview-row:nth-child(even){
+        background-color: #fff;
+    }
+    .overview-row:nth-child(odd){
         background-color: #f9f9f9;
     }
     .overview-row{
@@ -31,10 +39,6 @@
     .overview-cell{
         width: 40px;
     }
-    .overview-cell-room{
-        width: 200px;
-        text-align: left;
-    }
     .overview-cell-booked{
         background-color: red;
     }
@@ -42,11 +46,23 @@
 
 <body>
     <h1>Booking overview</h1>
-    <div class=overview-table-wrapper>
+
+      <!--First column, as its own table, to simplify horizontal scrolling-->
+      <table class="overview-col-first">
+        <!--Header-->
+        <tr class="overview-header"><th>Room</th></tr>
+
+        <!--Content-->
+        {% for key, value in busy_dates.items %}
+            <tr class="overview-row"><td>{{ key }}</td></tr>
+        {% endfor %}
+    </table>
+
+    <!--Rest of table-->
+    <div class=overview-table-wrapper style="float: left;">
     <table class="overview-table">
         <!--Header-->
             <tr class="overview-header">
-                    <th class="overview-cell-room">Room</th>
                 {% for date in header_row_dates %}
                     <th class="overview-cell">{{ date }}</th>
                 {% endfor %}
@@ -55,12 +71,11 @@
         <!--Content-->
         {% for key, value in busy_dates.items %}
             <tr class="overview-row">
-                <td>{{ key }}</td>
                 {% for status in value %}
                     {% if status == None %}
                         <td>-</td>
                     {% else %}
-                        <td class="overview-cell-booked" title={{ status.name }}>
+                        <td class="overview-cell-booked" title="{{ status.name }}">
                             <a href="http://127.0.0.1:8000/admin/booking/booking/{{ status.id }}" style="display:block;">&nbsp;</a>
                         </td>
                     {% endif %}

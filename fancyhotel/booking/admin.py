@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import Hotelroom, Customer, Booking, BookingOverview
 from django.template.response import TemplateResponse
 from django.urls import path
+from django.db.models import Q
 import datetime
 
 # Register your models here.
@@ -78,12 +79,13 @@ class BookingOverviewAdmin(admin.ModelAdmin):
             date = today + datetime.timedelta(i)
             header_row_dates.append(str(date.day) + '/' + str(date.month))
 
-        # Create an empty dict of rooms, holding NUMBER_OF_DAYS bolean values
+        # Fill busy_dates with NUMBER_OF_DAYS bolean values
         for room in rooms:
             busy_dates[room.roomNumber] = [None] * NUMBER_OF_DAYS
 
         # Find all bookings in time period:
-        bookings = Booking.objects.filter(dateEnd__gte=today).filter(dateEnd__lte=end_of_period)
+        bookings = Booking.objects.filter(dateEnd__gte=today).filter(
+            Q(dateEnd__lte=end_of_period) | Q(dateStart__lte=end_of_period))
 
         # Go through bookings, 
         for booking in bookings:
@@ -92,6 +94,8 @@ class BookingOverviewAdmin(admin.ModelAdmin):
 
             if start_index < 0:
                 start_index = 0
+            if end_index > NUMBER_OF_DAYS:
+                end_index = NUMBER_OF_DAYS
 
             # Loops through start_index + 1 --> end_index, as you might have a booking ending and starting on the same day
             for i in range(start_index + 1, end_index + 1):
