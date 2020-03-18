@@ -13,7 +13,7 @@
             <div class="card-body">
                 <h3 class="card-title">Du har booket: </h3>
                 </br>
-            
+                
             {% for booking in bookings %}
             <div class="row" style="padding: 0.7%;">
                 <div class="col-sm">
@@ -27,6 +27,23 @@
                 </div>
             </div>
             {% endfor %}
+
+            <h3 style="margin-top: 4%;" class="card-title">Din kontakt informasjon: </h3>
+
+            {% for personal_info in info %}
+                <div class="row" style="padding: 0.7%;">
+                    <div class="col-sm">
+                        Navn: {{ personal_info.get_full_name }}
+                    </div>
+                    <div class="col-sm">
+                        Email: {{ personal_info.email }}
+                    </div>
+                    <div class="col-sm">
+                        Mobilnummer: {{ personal_info.phone_number }}
+                    </div>
+                </div>
+            {% endfor %}
+
             </div>
         </div>
     </div>    
