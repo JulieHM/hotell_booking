@@ -70,9 +70,9 @@ class BookingOverviewAdmin(admin.ModelAdmin):
         busy_dates = {}
         header_row_dates = []
         today = datetime.date.today()
-        end_of_period = today + datetime.timedelta(NUMBER_OF_DAYS)
+        end_of_period = today + datetime.timedelta(NUMBER_OF_DAYS - 1)
 
-        rooms = Hotelroom.objects.all() ##### NEEDED???
+        rooms = Hotelroom.objects.all()
         
         # Create header-row
         for i in range(NUMBER_OF_DAYS):
@@ -85,7 +85,7 @@ class BookingOverviewAdmin(admin.ModelAdmin):
 
         # Find all bookings in time period:
         bookings = Booking.objects.filter(dateEnd__gte=today).filter(
-            Q(dateEnd__lte=end_of_period) | Q(dateStart__lte=end_of_period))
+            Q(dateEnd__lte=end_of_period) | Q(dateStart__lt=end_of_period))
 
         # Go through bookings, 
         for booking in bookings:
@@ -97,8 +97,11 @@ class BookingOverviewAdmin(admin.ModelAdmin):
             if end_index > NUMBER_OF_DAYS:
                 end_index = NUMBER_OF_DAYS
 
-            # Loops through start_index + 1 --> end_index, as you might have a booking ending and starting on the same day
-            for i in range(start_index + 1, end_index + 1):
+            # Adds a booking to busy_dates. The overview shows each booking starting the day the customer
+            # arrives, and then have length = as many nights as the customer stays. This makes sense from
+            # a business perspective, as the hotel can have another customer checking in while the first
+            # customer checks out
+            for i in range(start_index, end_index):
                 busy_dates[booking.room.roomNumber][i] = dict(
                                             name = (booking.lastName + ', ' + booking.firstName),
                                             id = booking.id)
@@ -108,6 +111,8 @@ class BookingOverviewAdmin(admin.ModelAdmin):
             # Fill in values here
             header_row_dates = header_row_dates,
             busy_dates = busy_dates,
+            weekdays_until_saturday = 6 - today.weekday(),
+            weekdays_until_sunday = 7 - today.weekday()
         )
 
         return TemplateResponse(request, 'admin/overview.html', context)

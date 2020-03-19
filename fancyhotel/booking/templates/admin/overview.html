@@ -40,7 +40,13 @@
         width: 40px;
     }
     .overview-cell-booked{
-        background-color: red;
+        background-color: red !important;
+    }
+    .overview-table th:nth-child(7n + {{ weekdays_until_saturday }}),
+    .overview-table td:nth-child(7n + {{ weekdays_until_saturday }}),
+    .overview-table th:nth-child(7n + {{ weekdays_until_sunday }}),
+    .overview-table td:nth-child(7n + {{ weekdays_until_sunday }}){
+        background-color:rgba(61, 61, 61, 0.05);
     }
 </style>
 
@@ -71,12 +77,12 @@
         <!--Content-->
         {% for key, value in busy_dates.items %}
             <tr class="overview-row">
-                {% for status in value %}
-                    {% if status == None %}
+                {% for booking in value %}
+                    {% if booking == None %}
                         <td>-</td>
                     {% else %}
-                        <td class="overview-cell-booked" title="{{ status.name }}">
-                            <a href="http://127.0.0.1:8000/admin/booking/booking/{{ status.id }}" style="display:block;">&nbsp;</a>
+                        <td class="overview-cell-booked" title="{{ booking.name }}">
+                            <a href="http://127.0.0.1:8000/admin/booking/booking/{{ booking.id }}" style="display:block;">&nbsp;</a>
                         </td>
                     {% endif %}
                 {% endfor %}
