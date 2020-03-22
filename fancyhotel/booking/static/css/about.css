@@ -19,24 +19,6 @@ h1{
     color: black;
 }
 
-/* container for header slider*/
-.carousel-item{
-   width:100%; /*container-width*/
-   height: 820px;
-   overflow:hidden; /*hide bounds of image */
-   margin:center;   /*reset margin of figure tag*/
-}
-
-/* stiler for bildene inni bilde sliden*/
-.carousel-item img{
-    display:block; /*remove inline-block spaces*/
-    width:100%; /*make image streatch*/
-    
-}
-
-
-
-
 .bilde{
     display: inline-block;
     margin-left: 50px;
