@@ -7,59 +7,37 @@
     <title>Document</title>
 </head>
 <body>
+  {% load static %} 
 
-    {% block content %}
+  {% block content %}
 
-    
+    <li><a style="color: #26103a; "href={{room.roomNumber}}> {{ room.roomNumber }} </a></li>
     <div class="container">
+      <br><br>
         <div class="row">
             <div class="col-xs-6">
               <div class="card mb-3">
-                <img class="card-img-top" src="https://g.acdn.no/obscura/API/dynamic/r1/escenic/tr_1080_607_l_f/0000/archive/04722/hotellrom_4722942a.jpg?chk=35B80F" alt="Card image cap">
+                <img class="card-img-top" src="{% static 'img/hotelroom1.jpeg' %}" alt="hotell rom">
                 <div class="card-body">
-                  <h3 class="card-title">Romtype1</h3>
-                  <p class="card-text">Antall sengeplasser</p>
-                  <p class="card-text">Generell informasjon om rommet</p>
-                  <button type="submit" class="btn btn-primary">Bestill Romtype1</button>
-                
+                  <h3 class="card-title" style="font-family: 'Times New Roman', Times, serif">Rom {{ room.roomNumber }}</h3>
+                  <p class="card-text">Antall sengeplasser: {{ room.numberOfBeds }}</p>
+                  <p class="card-text">Pris per natt: {{ room.pricePrNight }}</p>
+                  
+
+                  <p class="card-text"><i>Generell informasjon om rommet</i></p>
+                  <form action="booking" method="GET">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-dark">Book rom {{ room.roomNumber }}</button>
+                  </form>
                 </div>
               </div>
             </div>
-          
-            <div class="col-xs-6">
-              
-              </div>
-            </div>
-        </div>
+            <div class="col-xs-6"></div>
+          </div>
     </div>
-  
-  
-    <div class="container">
-      <div class="row">
-          <div class="col-xs-6">
-            <div class="card mb-3">
-              <img class="card-img-top" src="https://g.acdn.no/obscura/API/dynamic/r1/escenic/tr_1080_607_l_f/0000/archive/04722/hotellrom_4722942a.jpg?chk=35B80F" alt="Card image cap">
-              <div class="card-body">
-                <h3 class="card-title">Romtype2</h3>
-                <p class="card-text">Antall sengeplasser</p>
-               
-                <p class="card-text">Generell informasjon om rommet</p>
-                <button type="submit" class="btn btn-primary">Bestill Romtype2</button>
-                
-              </div>
-            </div>
-          </div>
-          <div class="col-xs-6">
-            
-            </div>
-          </div>
-      </div>
-  </div>
-
   {% endblock %}
   
   
 
-    
 </body>
 </html>

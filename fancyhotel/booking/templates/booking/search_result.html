@@ -7,15 +7,26 @@
     <title>Document</title>
 </head>
 <body>
+    {% load static %} 
+    {% block header %}
+    <div>
+      <img class="d-block w-100" src="{% static "img/front.jpeg" %}" alt="Third slide" height="400vh" style="overflow: hidden; object-fit: cover;">
+    </div>
+    {% endblock %}
+
     {% block content %}
 
     <div class="container">
         <form action="" method="post">
             {% csrf_token %}
-            <h1>Ledige rom fra {{startDate}} til {{endDate}}</h1>
+            <br><br>
+            <h1 style="font-family: 'Times New Roman', Times, serif;">Ledige rom fra {{startDate}} til {{endDate}}</h1>
+            <p style="font-family: 'Times New Roman', Times, serif;"> Disse rommene er ledige for de datoene du har valgt. Trykk deg inn på et av rommene for å se mer informasjon</p>
             <ul>
             {% for room in rooms %}
-                <li><a href={{room.roomNumber}}> {{ room.roomNumber }} </a></li>
+                <li><a style="color: #26103a; "href={{room.roomNumber}}> {{ room.roomNumber }} </a></li>
+
+                
             {% endfor %}
             </ul>
         </form>

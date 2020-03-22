@@ -10,8 +10,13 @@
 </head>
 
 <body>
+  {% load static %} 
+  {% block header %}
+  <div>
+    <img class="d-block w-100" src="{% static "img/front.jpeg" %}" alt="Third slide" height="400vh" style="overflow: hidden; object-fit: cover;">
+  </div>
+  {% endblock %}
     {% block content %}
-
   <!-- date picker -->
   <div class="container">
     <form action="" method="post" novalidate>
