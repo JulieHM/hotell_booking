@@ -7,20 +7,30 @@
     <title>Room {{roomNr}}</title>
 </head>
 <body>
+    {% load static %}
+    {% block header %}
+      <div>
+        <img class="d-block w-100" src="{% static "img/front.jpeg" %}" alt="Third slide" height="400vh" style="overflow: hidden; object-fit: cover;">
+      </div>
+      {% endblock %} 
 
     {% block content %}
+    {% csrf_token %}
     <div class="container">
+      <br><br>
         <div class="row">
             <div class="col-xs-6">
               <div class="card mb-3">
-                <img class="card-img-top" src="https://g.acdn.no/obscura/API/dynamic/r1/escenic/tr_1080_607_l_f/0000/archive/04722/hotellrom_4722942a.jpg?chk=35B80F" alt="Card image cap">
+                <img class="card-img-top" src="{% static 'img/hotelroom1.jpeg' %}" alt="hotell rom">
                 <div class="card-body">
-                  <h3 class="card-title">Rom {{ room.roomNumber }}</h3>
+                  <h3 class="card-title" style="font-family: 'Times New Roman', Times, serif">Rom {{ room.roomNumber }}</h3>
                   <p class="card-text">Antall sengeplasser: {{ room.numberOfBeds }}</p>
+                  <p class="card-text">Pris per natt: {{ room.pricePrNight }}</p>
+
                   <p class="card-text"><i>Generell informasjon om rommet</i></p>
                   <form action="booking" method="GET">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-primary">Book rom {{ room.roomNumber }}</button>
+                    <button type="submit" class="btn btn-dark">Book rom {{ room.roomNumber }}</button>
                   </form>
                 
                 </div>
@@ -34,7 +44,6 @@
         </div>
     </div>
   </div>
-
   {% endblock %}
   
   
