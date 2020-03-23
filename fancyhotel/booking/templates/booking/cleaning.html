@@ -38,6 +38,7 @@
     }
     .overview-cell{
         width: 40px;
+        padding: 10px;
     }
     .overview-cell-booked{
         background-color: red !important;
@@ -56,11 +57,11 @@
       <!--First column, as its own table, to simplify horizontal scrolling-->
       <table class="overview-col-first">
         <!--Header-->
-        <tr class="overview-header"><th>Room</th></tr>
+        <tr class="overview-header"><th class="overview-cell">Room</th></tr>
 
         <!--Content-->
         {% for key, value in busy_dates.items %}
-            <tr class="overview-row"><td>{{ key }}</td></tr>
+            <tr class="overview-row"><td style="padding-left: 10px;">{{ key }}</td></tr>
         {% endfor %}
     </table>
 
@@ -79,7 +80,7 @@
             <tr class="overview-row">
                 {% for status in value %}
                     {% if status == None %}
-                        <td>-</td>
+                        <td style="text-align: center;">-</td>
                     {% else %}
                         <td class="overview-cell-booked"></td>
                     {% endif %}

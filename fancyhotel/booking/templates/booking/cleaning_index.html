@@ -1,17 +1,25 @@
 {% extends "booking/base.html" %}
 
 {% block content %}
+<style>
+    .cleaning-overview-td{
+        padding-left: 10px;
+        padding-right: 10px;
+        text-align: left;
+    }
+</style>
+
 <body>
     <h1>Booking overview</h1>
 
     <p>
         Vennligst velg antall dager du vil se:
         <table>
-            <td><a href="7">7</a></td>
-            <td><a href="14">14</a></td>
-            <td><a href="30">30</a></td>
-            <td><a href="60">60</a></td>
-            <td><a href="365">365</a></td>
+            <td class="cleaning-overview-td"><a href="7">7</a></td>
+            <td class="cleaning-overview-td"><a href="14">14</a></td>
+            <td class="cleaning-overview-td"><a href="30">30</a></td>
+            <td class="cleaning-overview-td"><a href="60">60</a></td>
+            <td class="cleaning-overview-td"><a href="365">365</a></td>
         </table>
     </p>
 </body>
