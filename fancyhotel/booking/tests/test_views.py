@@ -3,10 +3,10 @@ from django.urls import reverse
 from booking.models import Booking, Hotelroom 
 import datetime
 
-""" from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from users.models import CustomUser """
+from users.models import CustomUser
 
 from django.contrib.auth import authenticate
 
@@ -17,6 +17,7 @@ class TestViews(TestCase):
         self.index_url = reverse('index')
         self.roombooking_url = reverse('roombooking', args=['101'])
         self.thanks_url = reverse('thanks')
+        self.room_url = reverse('room', args=['101'])
         self.hotelroom_101 = Hotelroom.objects.create(
             id = 1,
             roomNumber= 101,
@@ -30,6 +31,11 @@ class TestViews(TestCase):
 
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'booking/index.html')
+
+    def test_room(self):
+        response = self.client.get(self.room_url)
+
+        self.assertTemplateUsed(response, 'booking/room.html')
 
     def test_roombooking_GET(self):
         response = self.client.get(self.roombooking_url)
