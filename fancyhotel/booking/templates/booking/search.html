@@ -18,10 +18,10 @@
           
           if (content.style.display == "none") {
               content.style.display = "";
-              obj.innerHTML = "-";
+              obj.innerHTML = "Hide advanced options";
           } else {
               content.style.display = "none";
-              obj.innerHTML = "+";
+              obj.innerHTML = "Show advanced options";
           }
       }
     </script>
@@ -41,7 +41,7 @@
               {{ form.minNumberOfBeds|as_crispy_field }}
               {{ form.maxPricePrNight|as_crispy_field }}
 
-              <a href="#" onclick="more(this);">+</a>
+              <a href="#" onclick="more(this);">Show advanced options</a>
               <div id="showMore"  style="display: none;">
                 
                 {{ form.singleBeds|as_crispy_field }}
@@ -80,6 +80,7 @@
               </div>
               </div>
 
+            <br>
             <!--<input type="submit" value="Submit">  -->
             <button type="submit" class="btn btn-success">Se tilgjengelighet</button>    
         </form>

@@ -193,7 +193,6 @@ def getRooms(request):
             minNumberOfBeds = form.cleaned_data['minNumberOfBeds']
             maxPricePrNight = form.cleaned_data['maxPricePrNight']
             singleBeds = form.cleaned_data['singleBeds']
-            # floor = form.cleaned_data['floor']
             includedBreakfast = form.cleaned_data['includedBreakfast']
             includedParking = form.cleaned_data['includedParking']
             includedCancelling = form.cleaned_data['includedCancelling']
@@ -215,8 +214,6 @@ def getRooms(request):
                 rooms = rooms.exclude(pricePrNight__gt=maxPricePrNight)
             if singleBeds != None:
                 rooms = rooms.exclude(singleBeds__lt=singleBeds)
-            """if floor != None:
-                rooms.filter(floor=floor)"""
             if includedBreakfast == True:
                 rooms = rooms.filter(includedBreakfast=True)
             if includedParking == True:

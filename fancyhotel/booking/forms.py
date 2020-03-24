@@ -61,7 +61,6 @@ class SearchForm(forms.Form):
 
     # Advanced options (hidden by default):
     singleBeds = forms.IntegerField(required=False, label='Number of single beds')
-    # floor = forms.IntegerField(required=False, label='Floor')
     includedBreakfast = forms.BooleanField(required=False, label='Breakfast included')
     includedParking = forms.BooleanField(required=False, label='Parking included')
     includedCancelling = forms.BooleanField(required=False, label='Free cancelling included')
