@@ -15,6 +15,7 @@ from users.models import CustomUser
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.template.response import TemplateResponse
 import datetime
+from django.contrib import messages
 
 
 def index(request):
@@ -356,7 +357,15 @@ def login_user(request):
             user = form.get_user()
             login(request, user)
 
-            return HttpResponseRedirect(reverse('index'))
+            # Get NEXT-value (to redirect):
+            valuenext= request.POST.get('next')
+
+            if valuenext == '':
+                messages.success(request, "You have successfully logged in")
+                return HttpResponseRedirect(reverse('index'))
+            else:
+                messages.success(request, "You have successfully logged in")
+                return HttpResponseRedirect(valuenext)
     else:
         form = AuthenticationForm()
 
