@@ -149,7 +149,6 @@ def about(request):
     return render(request, 'booking/about.html')
 
 
-
 def room(request, roomNr):
     room = Hotelroom.objects.get(roomNumber=roomNr)
     context = {'room': room,}

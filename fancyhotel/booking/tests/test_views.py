@@ -3,11 +3,6 @@ from django.urls import reverse
 from booking.models import Booking, Hotelroom 
 import datetime
 
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from users.models import CustomUser
-
 from django.contrib.auth import authenticate
 
 class TestViews(TestCase):
@@ -17,7 +12,8 @@ class TestViews(TestCase):
         self.index_url = reverse('index')
         self.roombooking_url = reverse('roombooking', args=['101'])
         self.thanks_url = reverse('thanks')
-        self.room_url = reverse('room', args=['101'])
+        self.roomoverview_url = reverse('roomoverview')
+        self.room_url = reverse('room info', args=['101'])
         self.hotelroom_101 = Hotelroom.objects.create(
             id = 1,
             roomNumber= 101,
@@ -34,8 +30,13 @@ class TestViews(TestCase):
 
     def test_room(self):
         response = self.client.get(self.room_url)
-
         self.assertTemplateUsed(response, 'booking/room.html')
+
+    def test_roomoverview(self):
+        response = self.client.get(self.roomoverview_url)
+
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'booking/roomoverview.html')
 
     def test_roombooking_GET(self):
         response = self.client.get(self.roombooking_url)
@@ -66,28 +67,22 @@ class TestViews(TestCase):
         self.assertTemplateUsed(response, 'booking/thanks.html')
 
 
-""" class AccountTestCase(StaticLiveServerTestCase):
-    def setUp(self):
-        self.selenium = webdriver.Chrome()
-        super().setUp()
-        user = CustomUser.objects.create(first_name='test', email='test@test.com', is_active=True)
-        user.set_password('Test1234')
-        user.save()
+    def test_getRooms_POST(self):
+        url = reverse('search rooms')
+        response = self.client.post(url, { 
+            'startDate': datetime.date(2020, 3, 10),
+            'endDate': datetime.date(2020, 3, 12),
+            'minNumberOfBeds': 2,
+            'maxPricePrNight': 1000, 
+        }, follow=True)
 
-    def tearDownClass(self):
-        self.selenium.quit()
-        super().tearDown()
+        #the print return 101, but in the assertEquals only returns <Hotelroom: 101>
+        #print(response.context['rooms'][0])
+        #self.assertEquals(response.context['rooms'][0], 101 )
 
-    def test_register(self):
-        user = authenticate(username='test', password='Test1234')
-        if user is not None: # prints Backend login failed
-            print("Backend login successful")
-        else:
-            print("Backend login failed")
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'booking/search_result.html')
 
-    user = CustomUser.objects.get(username='test')
-    print(user)
-    print(user.username) # prints test
-    print(user.password) # prints Test1234 """
+
 
     
