@@ -3,6 +3,20 @@ from .models import Customer, Booking
 from users.models import CustomUser
 from django.contrib.auth.forms import UserCreationForm
 
+class CheckboxDefaultInput(forms.CheckboxInput):
+    """
+    Override CheckboxInput to have "normal" default values
+
+    Inspired by: https://stackoverflow.com/questions/5190313/django-booleanfield-how-to-set-the-default-value-to-true
+    """
+    def __init__(self, default=False, *args, **kwargs):
+        super(CheckboxDefaultInput, self).__init__(*args, **kwargs)
+        self.default = default
+
+    def value_from_datadict(self, data, files, name):
+        if name not in data:
+            return self.default
+        return super(CheckboxDefaultInput, self).value_from_datadict(data, files, name)
 
 
 ########################### CUSTOMER ###########################
@@ -45,6 +59,21 @@ class SearchForm(forms.Form):
     minNumberOfBeds = forms.IntegerField(label='Number of beds')
     maxPricePrNight = forms.IntegerField(label='Maximum price per night', required=False)
 
+    # Advanced options (hidden by default):
+    singleBeds = forms.IntegerField(required=False, label='Number of single beds')
+    # floor = forms.IntegerField(required=False, label='Floor')
+    includedBreakfast = forms.BooleanField(required=False, label='Breakfast included')
+    includedParking = forms.BooleanField(required=False, label='Parking included')
+    includedCancelling = forms.BooleanField(required=False, label='Free cancelling included')
+    smokingAllowed = forms.BooleanField(required=False, label='Smoking allowed')
+
+    class Meta:
+        widgets = {
+            'includedBreakfast': CheckboxDefaultInput(default=True, attrs={'id':'includedBreakfast', 'checked': True}),
+            'includedParking': CheckboxDefaultInput(default=True, attrs={'id':'includedParking', 'checked': True}),
+            'includedCancelling': CheckboxDefaultInput(default=False, attrs={'id':'includedCancelling',}),
+            'smokingAllowed': CheckboxDefaultInput(default=False, attrs={'id':'smokingAllowed',}),
+        }
 
     def clean(self):
         cleaned_data = super().clean()
@@ -58,6 +87,8 @@ class SearchForm(forms.Form):
             # Raise error if needed:
             if startDate > endDate:
                 raise forms.ValidationError("Check in must be before check out!", code='invalid-date')
+
+
 
 class AdvancedSearchForm(SearchForm):
     singleBeds = forms.IntegerField(required=False, label='Number of single beds')
