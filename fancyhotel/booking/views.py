@@ -24,12 +24,12 @@ def thanks(request):
         'startDate' : request.session.get('startDate'),
         'endDate' : request.session.get('endDate'),
         }
-    email(request)
+    sendemail(request)
 
     return render(request, 'booking/thanks.html', context)
 
 
-def email(request):
+def sendemail(request):
     subject = 'Bookingbekreftelse'
     message = 'Takk for at du booket rom ' + str(request.session.get('roomNr')) + ' den ' + str(request.session.get('startDate')) + ' - ' + str(request.session.get('endDate'))
     email_from = settings.EMAIL_HOST_USER
@@ -100,6 +100,7 @@ def roombooking(request, roomNr):
                 form.save()
 
                 if 'submit_and_register' in request.POST:
+                    sendemail(request)
                     return HttpResponseRedirect(reverse('sign up'))
 
             return HttpResponseRedirect(reverse('thanks'))
@@ -159,6 +160,7 @@ def booking_overview(request):
     if request.user.is_authenticated:
         current_user = request.user
         booking = Booking.objects.filter(email = current_user.email)
+
         personal_info = CustomUser.objects.filter(email = current_user.email)
         context = {
         'info': personal_info,
@@ -241,7 +243,6 @@ def signup_user(request):
             email = request.POST['email']
             password = request.POST['password1']
             user = authenticate(request, username=email, password=password)
-
             if user is not None:
                 # The user actually exists - SHOULD ALWAYS BE TRUE!!!
                 login(request, user)
