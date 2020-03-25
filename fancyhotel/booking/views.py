@@ -12,6 +12,11 @@ from django.conf import settings
 
 from users.models import CustomUser 
 
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.template.response import TemplateResponse
+import datetime
+from django.contrib import messages
+
 
 def index(request):
     return render(request, 'booking/index.html')
@@ -147,6 +152,82 @@ def roomoverview(request):
 
 def about(request):
     return render(request, 'booking/about.html')
+
+
+
+# Test for å sjekke om bruker er cleaning:
+def check_cleaning(user):
+    return user.is_cleaner
+
+@login_required()
+@user_passes_test(check_cleaning, login_url='', redirect_field_name=None)
+def cleaning_index(request):
+    return TemplateResponse(request, 'booking/cleaning_index.html')
+
+@login_required()
+@user_passes_test(check_cleaning, login_url='', redirect_field_name=None)
+def cleaning(request, NUMBER_OF_DAYS):
+    """
+        A view, rendering an HTML-table with rooms as rows and days as columns
+
+            
+        Example of busy_dates, using NUMBER_OF_DAYS = 7:
+            busy_dates == {
+                101 : [None, None, None, booked, booked, None, None],
+                102 : [None, None, booked, None, booked, None, None],
+                ...
+            }
+
+        An anonymized version of admin.overview
+    """
+
+    busy_dates = {}
+    header_row_dates = []
+    today = datetime.date.today()
+    end_of_period = today + datetime.timedelta(NUMBER_OF_DAYS - 1)
+
+    rooms = Hotelroom.objects.all()
+    
+    # Create header-row
+    for i in range(NUMBER_OF_DAYS):
+        date = today + datetime.timedelta(i)
+        header_row_dates.append(str(date.day) + '/' + str(date.month))
+
+    # Fill busy_dates with NUMBER_OF_DAYS bolean values
+    for room in rooms:
+        busy_dates[room.roomNumber] = [None] * NUMBER_OF_DAYS
+
+    # Find all bookings in time period:
+    bookings = Booking.objects.filter(dateEnd__gte=today).filter(
+        Q(dateEnd__lte=end_of_period) | Q(dateStart__lt=end_of_period))
+
+    # Go through bookings, 
+    for booking in bookings:
+        start_index = (booking.dateStart - today).days
+        end_index = (booking.dateEnd - today).days
+
+        if start_index < 0:
+            start_index = 0
+        if end_index > NUMBER_OF_DAYS:
+            end_index = NUMBER_OF_DAYS
+
+        """ Adds a booking to busy_dates. The overview shows each booking starting the day the customer
+        arrives, and then have length = as many nights as the customer stays. This means that blank days can always 
+        be cleaned after a set checkout-time, while the cleaning the first day of a booking must be done before
+        a set checkin-time.
+        """
+        for i in range(start_index, end_index):
+            busy_dates[booking.room.roomNumber][i] = 'booked'
+
+    context = dict(
+        # Fill in values here
+        header_row_dates = header_row_dates,
+        busy_dates = busy_dates,
+        weekdays_until_saturday = 6 - today.weekday(),
+        weekdays_until_sunday = 7 - today.weekday(),
+    )
+
+    return TemplateResponse(request, 'booking/cleaning.html', context)
 
 
 
@@ -296,7 +377,15 @@ def login_user(request):
             user = form.get_user()
             login(request, user)
 
-            return HttpResponseRedirect(reverse('index'))
+            # Get NEXT-value (to redirect):
+            valuenext= request.POST.get('next')
+
+            if valuenext == '':
+                messages.success(request, "You have successfully logged in")
+                return HttpResponseRedirect(reverse('index'))
+            else:
+                messages.success(request, "You have successfully logged in")
+                return HttpResponseRedirect(valuenext)
     else:
         form = AuthenticationForm()
 
