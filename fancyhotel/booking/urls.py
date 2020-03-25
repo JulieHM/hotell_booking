@@ -28,6 +28,10 @@ urlpatterns = [
 
     path('about/', views.about, name='about'),
 
+    # Cleaning information
+    path('cleaning/', views.cleaning_index, name='cleaning-index'),
+    path('cleaning/<int:NUMBER_OF_DAYS>', views.cleaning, name='cleaning')
+
     #test-shit
     #path('signup_test/', views.signup_user, name="signup_test"),
     #path('login_test/', views.login_user, name="login_test")
