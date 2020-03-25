@@ -1,0 +1,94 @@
+{% extends "admin/overview_index.html" %}
+
+{% block overview %}
+<style>
+    .overview-table-wrapper{
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        width: 90%; /* Fallback, if needed */
+        width: calc(100% - 5em);
+    }
+    .overview-table, .overview-col-first{
+        color: #333;
+        border-color: #707070;
+    }
+    .overview-header{
+        font-weight: bold;
+        background-color: #f9f9f9;
+    }
+    .overview-col-first{
+        float: left;
+        width: 5em;
+        border-right: 1px solid #f9f9f9;
+        text-align: left;
+    }
+    .overview-row:nth-child(even){
+        background-color: #fff;
+    }
+    .overview-row:nth-child(odd){
+        background-color: #f9f9f9;
+    }
+    .overview-row{
+        color: black;
+        font-weight: normal;
+    }
+    .overview-row:hover{
+        font-weight: bold;
+    }
+    .overview-cell{
+        width: 40px;
+    }
+    .overview-cell-booked{
+        background-color: red !important;
+    }
+    .overview-table th:nth-child(7n + {{ weekdays_until_saturday }}),
+    .overview-table td:nth-child(7n + {{ weekdays_until_saturday }}),
+    .overview-table th:nth-child(7n + {{ weekdays_until_sunday }}),
+    .overview-table td:nth-child(7n + {{ weekdays_until_sunday }}){
+        background-color:rgba(61, 61, 61, 0.05);
+    }
+</style>
+
+<body>
+    <h1>Booking overview</h1>
+
+      <!--First column, as its own table, to simplify horizontal scrolling-->
+      <table class="overview-col-first">
+        <!--Header-->
+        <tr class="overview-header"><th>Room</th></tr>
+
+        <!--Content-->
+        {% for key, value in busy_dates.items %}
+            <tr class="overview-row"><td>{{ key }}</td></tr>
+        {% endfor %}
+    </table>
+
+    <!--Rest of table-->
+    <div class=overview-table-wrapper style="float: left;">
+    <table class="overview-table">
+        <!--Header-->
+            <tr class="overview-header">
+                {% for date in header_row_dates %}
+                    <th class="overview-cell">{{ date }}</th>
+                {% endfor %}
+            </tr>
+
+        <!--Content-->
+        {% for key, value in busy_dates.items %}
+            <tr class="overview-row">
+                {% for booking in value %}
+                    {% if booking == None %}
+                        <td>-</td>
+                    {% else %}
+                        <td class="overview-cell-booked" title="{{ booking.name }}">
+                            <a href="http://127.0.0.1:8000/admin/booking/booking/{{ booking.id }}" style="display:block;">&nbsp;</a>
+                        </td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+    </div>   
+</body>
+{% endblock %}
