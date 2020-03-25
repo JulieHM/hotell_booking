@@ -5,11 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rombestilling</title>
+
 </head>
 <body>
     {% load crispy_forms_tags %}
 
     {% block content %}
+
+    <script>
+      function more(obj) {
+          var content = document.getElementById("showMore");
+          
+          if (content.style.display == "none") {
+              content.style.display = "";
+              obj.innerHTML = "Hide advanced options";
+          } else {
+              content.style.display = "none";
+              obj.innerHTML = "Show advanced options";
+          }
+      }
+    </script>
+
 
     <div class="container">
         <form action="" method="post" novalidate>
@@ -24,6 +40,47 @@
               </div>
               {{ form.minNumberOfBeds|as_crispy_field }}
               {{ form.maxPricePrNight|as_crispy_field }}
+
+              <a href="#" onclick="more(this);">Show advanced options</a>
+              <div id="showMore"  style="display: none;">
+                
+                {{ form.singleBeds|as_crispy_field }}
+
+              <div class='form-group'>
+                <div id='div_id_includedBreakfast' class="form-check">
+                  <input type="checkbox" name="includedBreakfast" class="checkboxinput form-check-input" id="id_includedBreakfast" checked="True">
+                  <label for="id_includedBreakfast" class="form-check-label">
+                    Breakfast included
+                  </label>
+                </div>
+              </div>
+              <div class='form-group'>
+                <div id='div_id_includedParking' class="form-check">
+                  <input type="checkbox" name="includedParking" class="checkboxinput form-check-input" id="id_includedParking" checked="True">
+                  <label for="id_includedParking" class="form-check-label">
+                    Parking included
+                  </label>
+                </div>
+              </div>
+              <div class='form-group'>
+                <div id='div_id_includedCancelling' class="form-check">
+                  <input type="checkbox" name="includedCancelling" class="checkboxinput form-check-input" id="id_includedCancelling">
+                  <label for="id_includedCancelling" class="form-check-label">
+                    Free cancelling included
+                  </label>
+                </div>
+              </div>
+              <div class='form-group'>
+                <div id='div_id_smokingAllowed' class="form-check">
+                  <input type="checkbox" name="smokingAllowed" class="checkboxinput form-check-input" id="id_smokingAllowed">
+                  <label for="id_smokingAllowed" class="form-check-label">
+                    Smoking allowed
+                  </label>
+                </div>
+              </div>
+              </div>
+
+            <br>
             <!--<input type="submit" value="Submit">  -->
             <button type="submit" class="btn btn-success">Se tilgjengelighet</button>    
         </form>
