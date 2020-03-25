@@ -252,6 +252,11 @@ def booking_overview(request):
     return render(request, "booking/minside.html", context)
 
 def getRooms(request):
+    """
+    Gives a form to search and filter rooms.
+
+    Advanced filtering is inspired by: https://stackoverflow.com/a/16779396
+    """
     context = dict()
 
     # If method == POST - process form data
@@ -268,6 +273,11 @@ def getRooms(request):
             endDate = form.cleaned_data['endDate']
             minNumberOfBeds = form.cleaned_data['minNumberOfBeds']
             maxPricePrNight = form.cleaned_data['maxPricePrNight']
+            singleBeds = form.cleaned_data['singleBeds']
+            includedBreakfast = form.cleaned_data['includedBreakfast']
+            includedParking = form.cleaned_data['includedParking']
+            includedCancelling = form.cleaned_data['includedCancelling']
+            smokingAllowed = form.cleaned_data['smokingAllowed']
 
             # Set context and session variables to have correct startDate and endDate
             context['startDate'] = startDate
@@ -280,9 +290,19 @@ def getRooms(request):
                 numberOfBeds__gte=minNumberOfBeds).exclude(
                 Q(booking__dateEnd__gt=startDate) & Q(booking__dateStart__lt=endDate)).distinct()
 
+            # There must be an easier way to do this...
             if maxPricePrNight != None:
-                rooms.exclude(
-                pricePrNight__gt=maxPricePrNight)
+                rooms = rooms.exclude(pricePrNight__gt=maxPricePrNight)
+            if singleBeds != None:
+                rooms = rooms.exclude(singleBeds__lt=singleBeds)
+            if includedBreakfast == True:
+                rooms = rooms.filter(includedBreakfast=True)
+            if includedParking == True:
+                rooms = rooms.filter(includedParking=True)
+            if includedCancelling == True:
+                rooms = rooms.filter(includedCancelling=True)
+            if smokingAllowed == True:
+                rooms = rooms.filter(smokingAllowed=True)
 
             context['rooms'] = rooms
             return render(request, 'booking/search_result.html', context)
