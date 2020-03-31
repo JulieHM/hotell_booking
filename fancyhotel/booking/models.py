@@ -21,7 +21,6 @@ class Hotelroom(models.Model):
     lastCleaned = models.DateTimeField(verbose_name='Last cleaned', default=timezone.now())
 
     created = models.DateTimeField(verbose_name='Created', auto_now_add=True)
-    lastEdited = models.DateTimeField(verbose_name='Last edited', auto_now=True)
 
     @property
     def doubleBeds(self):
@@ -32,7 +31,8 @@ class Hotelroom(models.Model):
         return int(str(self.roomNumber)[0])
 
     def cleanRoom(self):
-        lastCleaned = timezone.now()
+        self.lastCleaned = timezone.now()
+        self.save()
 
     class Meta:
         ordering = ['roomNumber']
