@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 from datetime import date, datetime
 from django.core.mail import send_mail
 from django.conf import settings
+from django.utils import timezone
 
 from users.models import CustomUser 
 
@@ -164,6 +165,39 @@ def check_cleaning(user):
 @user_passes_test(check_cleaning, login_url='', redirect_field_name=None)
 def cleaning_index(request):
     return TemplateResponse(request, 'booking/cleaning_index.html')
+
+
+@login_required()
+@user_passes_test(check_cleaning, login_url='', redirect_field_name=None)
+def cleaning_last_cleaned(request):
+    """
+    A view, rendering an HTML-table with rooms as rows and the last cleaned date
+    as columns
+    """
+
+    rooms = Hotelroom.objects.all()
+    context = {'rooms': rooms}
+    return TemplateResponse(request, 'booking/cleaning_last_cleaned.html', context)
+
+
+@login_required()
+@user_passes_test(check_cleaning, login_url='', redirect_field_name=None)
+def cleaning_clean(request):
+    """ Used for AJAX-handling, when the "clean"-button is clicked in last_cleaned"""
+    # Get RoomNumber & room
+    roomNumber = request.POST['roomNumber']
+    room = Hotelroom.objects.get(roomNumber=roomNumber)
+
+    # Call cleanRoom()
+    room.cleanRoom()
+
+    # Get date, update TimeZone and format date response, so it fits with the rest
+    lastCleaned = room.lastCleaned
+    lastCleaned_TZ = timezone.localtime(lastCleaned)
+    response = lastCleaned_TZ.strftime('%B %d, %Y - %H:%M')
+
+    return HttpResponse(response)
+
 
 @login_required()
 @user_passes_test(check_cleaning, login_url='', redirect_field_name=None)

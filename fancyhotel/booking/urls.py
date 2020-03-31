@@ -30,7 +30,9 @@ urlpatterns = [
 
     # Cleaning information
     path('cleaning/', views.cleaning_index, name='cleaning-index'),
-    path('cleaning/<int:NUMBER_OF_DAYS>', views.cleaning, name='cleaning')
+    path('cleaning/lastCleaned', views.cleaning_last_cleaned, name='cleaning-last-cleaned'),
+    path('cleaning/clean', views.cleaning_clean, name='cleaning-clean'),
+    path('cleaning/<int:NUMBER_OF_DAYS>', views.cleaning, name='cleaning'),
 
     #test-shit
     #path('signup_test/', views.signup_user, name="signup_test"),

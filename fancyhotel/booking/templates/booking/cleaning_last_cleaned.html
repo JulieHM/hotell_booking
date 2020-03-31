@@ -1,0 +1,52 @@
+{% extends "booking/cleaning_index.html" %}
+
+{% block overview %}
+
+<body>
+    <h1>Last cleaned</h1>
+
+    <table>
+        <tr>
+            <th>Room</th>
+            <th>Last cleaned</th>
+            <th>Update</th>
+        </tr>
+        {% for room in rooms %}
+        <tr>
+            <td>{{ room.roomNumber }}</td>
+            <td id='lastCleaned_{{room.roomNumber}}'>{{ room.lastCleaned | date:'F d, Y - H:i'}}</td>
+            <td><button class='clean_button' id={{room.roomNumber}}>Clean</button></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script>
+    /* Add listener, react on every button click */
+    if (document.body.addEventListener){
+        document.body.addEventListener('click',yourHandler,false);
+    } else{
+        document.body.attachEvent('onclick',yourHandler);//for IE
+    }
+    /* Function that runs when button is clicked */
+    function yourHandler(e){
+        e = e || window.event;
+        var target = e.target || e.srcElement;
+        if (target.className.match(/clean_button/))
+        {
+            var roomNumber = target.id;
+
+            $.ajax({
+                type: "POST",
+                url: "{{ 'clean' }}",   /* URL is relative */
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}', roomNumber: roomNumber},   /* Passing room number to view */
+                success:  function(response){
+                    /* Update "Last cleaned"-cell to response (as given by view) */
+                    document.getElementById("lastCleaned_".concat(roomNumber)).innerHTML = response;
+                }
+            });
+        }
+    }
+</script>
+{% endblock overview %}
