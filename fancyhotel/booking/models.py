@@ -18,7 +18,7 @@ class Hotelroom(models.Model):
     includedParking = models.BooleanField(default = True)
     includedCancelling = models.BooleanField(default = False)
     smokingAllowed = models.BooleanField(default = False)
-    lastCleaned = models.DateTimeField(verbose_name='Last cleaned', default=timezone.now())
+    lastCleaned = models.DateTimeField(verbose_name='Last cleaned', default=timezone.now)
 
     created = models.DateTimeField(verbose_name='Created', auto_now_add=True)
 
