@@ -3,6 +3,7 @@ from django.core.validators import MinValueValidator
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.conf import settings
+from django.utils import timezone
 
 # Create your models here.
 
@@ -17,6 +18,10 @@ class Hotelroom(models.Model):
     includedParking = models.BooleanField(default = True)
     includedCancelling = models.BooleanField(default = False)
     smokingAllowed = models.BooleanField(default = False)
+    lastCleaned = models.DateTimeField(verbose_name='Last cleaned', default=timezone.now())
+
+    created = models.DateTimeField(verbose_name='Created', auto_now_add=True)
+    lastEdited = models.DateTimeField(verbose_name='Last edited', auto_now=True)
 
     @property
     def doubleBeds(self):
@@ -25,6 +30,9 @@ class Hotelroom(models.Model):
     @property
     def floor(self):
         return int(str(self.roomNumber)[0])
+
+    def cleanRoom(self):
+        lastCleaned = timezone.now()
 
     class Meta:
         ordering = ['roomNumber']
