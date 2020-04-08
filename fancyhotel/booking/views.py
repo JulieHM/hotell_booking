@@ -154,6 +154,8 @@ def roomoverview(request):
 def about(request):
     return render(request, 'booking/about.html')
 
+
+
 # Test for å sjekke om bruker er cleaning:
 def check_cleaning(user):
     return user.is_cleaner
@@ -227,6 +229,8 @@ def cleaning(request, NUMBER_OF_DAYS):
     )
 
     return TemplateResponse(request, 'booking/cleaning.html', context)
+
+
 
 def room(request, roomNr):
     room = Hotelroom.objects.get(roomNumber=roomNr)
