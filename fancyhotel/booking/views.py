@@ -6,7 +6,7 @@ from .models import Hotelroom, Booking
 from .forms import SearchForm, BookingForm, UserCreateForm
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from django.core.mail import send_mail
 from django.conf import settings
 
@@ -14,7 +14,6 @@ from users.models import CustomUser
 
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.template.response import TemplateResponse
-import datetime
 from django.contrib import messages
 
 
@@ -184,14 +183,14 @@ def cleaning(request, NUMBER_OF_DAYS):
 
     busy_dates = {}
     header_row_dates = []
-    today = datetime.date.today()
-    end_of_period = today + datetime.timedelta(NUMBER_OF_DAYS - 1)
+    today = date.today()
+    end_of_period = today + timedelta(NUMBER_OF_DAYS - 1)
 
     rooms = Hotelroom.objects.all()
     
     # Create header-row
     for i in range(NUMBER_OF_DAYS):
-        date = today + datetime.timedelta(i)
+        date = today + timedelta(i)
         header_row_dates.append(str(date.day) + '/' + str(date.month))
 
     # Fill busy_dates with NUMBER_OF_DAYS bolean values
