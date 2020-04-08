@@ -3,8 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>{% block title %}Title{% endblock %}</title>
+    {% load static %} 
+    <link rel='icon' href="{% static "img/favicon-32x32.png" %}" type='image/x-icon'/>
+    <link rel="stylesheet" href="{% static "css/base.css" %}">  
+
+     <!-- bootstrap stylesheet -->
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- bootstrap JS, Popper.js, jQuery-->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    
+   
 
     <!-- to use forms -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -12,58 +25,93 @@
 
 </head>
 <body>
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-        <a class="navbar-brand" href="#"> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
-        <div id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'search rooms' %}">Rombestilling</a>
-            </li>
-            &nbsp&nbsp&nbsp
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'roomoverview' %}">Romoversikt</a>
-            </li>
-            &nbsp&nbsp&nbsp
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'about' %}">Om oss</a>
-            </li>
-            &nbsp&nbsp&nbsp
-            {% if user.is_authenticated %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'logg ut' %}">Logged in as {{ user.get_short_name }}. Click here to log out.</a>
-              </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'min side' %}">Min side</a> 
-            </li>
-              {% if user.is_cleaner %}
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'cleaning-index' %}">Cleaning information</a> 
-              </li>
-              {% endif %}
-            {% else %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'logg inn' %}">Login</a>
-              </li>
-            {% endif %}
-          </ul>
+  {% load static %} 
+  <!-- <header class=header>
+    <nav class="navbar navbar-expand-lg fixed-top py-3" id="myTopnav">
+        <div class="container"><a href="{% url 'about'%}"><img src="{% static 'img/logo_sort.png' %}" alt="logo" width="200vm"></a>
+            <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right"><i class="fa fa-bars"></i></button>
+            
+            <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active"><a href="{% url 'about' %}" class="nav-link text-uppercase font-weight-bold">Hjem <span class="sr-only">(current)</span></a></li>
+                    <li class="nav-item"><a href="{% url 'search rooms' %}" class="nav-link text-uppercase font-weight-bold">Bestilling</a></li>
+                    <li class="nav-item"><a href="{% url 'roomoverview' %}" class="nav-link text-uppercase font-weight-bold">Romoversikt</a></li>
+                    {% if user.is_authenticated %}
+                      <li class="nav-item"><a href="{% url 'logg ut' %}" class="nav-link text-uppercase font-weight-bold">Logget inn som {{ user.get_short_name }}. Logg ut.</a></li>
+                      <li class="nav-item"><a href="{% url 'min side' %}" class="nav-link text-uppercase font-weight-bold">Min side</a></li>
+                      {% if user.is_cleaner %}
+                        <li class="nav-item"><a href="{% url 'cleaning-index' %}" class="nav-link text-uppercase font-weight-bold">Cleaning information</a></li>
+                    {% endif %}
+                    {% else %}
+                      <li class="nav-item"><a href="{% url 'logg inn' %}" class="nav-link text-uppercase font-weight-bold">Logg inn</a></li>
+                    {% endif %}
+                    <li class="nav-item"><a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                        <i class="fa fa-bars"></i></li>
+                </ul>
+            </div>
         </div>
-      </nav>
+    </nav>
+</header> -->
 
-
-    <header class="jumbotron">
-        <div class="container">
-            <h1>Skikkelig fancy hotell</h1>
-            <p class="lead">Et fancy hotell for fancy folk</p>
+<header class="header">
+    <nav class="navbar navbar-expand-lg fixed-top py-3">
+        <div class="container"><a href="#" class="navbar-brand text-uppercase font-weight-bold"><img src="{% static 'img/logo_sort.png' %}" alt="logo" width="180vm"></a>
+            <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right"><i class="fa fa-bars"></i></button>
+            
+            <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active"><a href="{% url 'about' %}" class="nav-link text-uppercase font-weight-bold">Forside <span class="sr-only">(current)</span></a></li>
+                    <li class="nav-item"><a href="{% url 'search rooms' %}" class="nav-link text-uppercase font-weight-bold">Bestilling</a></li>
+                    <li class="nav-item"><a href="{% url 'roomoverview' %}" class="nav-link text-uppercase font-weight-bold">Romoversikt</a></li>
+                    {% if user.is_authenticated %}
+                      <li class="nav-item"><a href="{% url 'logg ut' %}" class="nav-link text-uppercase font-weight-bold">Logget inn som {{ user.get_short_name }}. Logg ut.</a></li>
+                      <li class="nav-item"><a href="{% url 'min side' %}" class="nav-link text-uppercase font-weight-bold">Min side</a></li>
+                    {% if user.is_cleaner %}
+                      <li class="nav-item"><a href="{% url 'cleaning-index' %}" class="nav-link text-uppercase font-weight-bold">Cleaning information</a></li>
+                    {% endif %}
+                    {% else %}
+                      <li class="nav-item"><a href="{% url 'logg inn' %}" class="nav-link text-uppercase font-weight-bold">Logg inn</a></li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
-    </header>
+    </nav>
+</header>
+<div class="container"></div>
+
+<script>
+    $(function () {
+    $(window).on('scroll', function () {
+        if ( $(window).scrollTop() > 10 ) {
+            $('.navbar').addClass('active');
+        } else {
+            $('.navbar').removeClass('active');
+        }
+    });
+});  
+
+</script>
+
+<div id="page-container">
+    <div id="content-wrap">
+      {% block header %}
+      <div>
+        <img class="d-block w-100" src="{% static "img/front.jpeg" %}" alt="Third slide" class="wrapper">
+      </div>
+      {% endblock %} 
 
     <!-- base.html fungerer som en mal, slik at alle html sidene har samme egenskaper.
         De to taggene nedenfor (i hvitt) finner man igjen på de andre .html sidene
         de er mellom disse taggene (på de andre sidene) man kan endre koden-->
-    {% block content %}
 
+    {% block content %}
     {% endblock %}
+
+    
+</div>
+</div>
+   
+
+
 </body>
 </html>
