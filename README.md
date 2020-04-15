@@ -2,11 +2,14 @@
 
 This is a website for Skikkelig Fancy Hotell. FILLERTEXT (Ikke ferdig enda)
 
+
 ## URL
 
 http://127.0.0.1:8000/booking/
 
 Because the website is run locally, this will be the URL to the website after running the server (Guide on how to do that below)
+
+
 ## Prerequisites
 
 * [Python 3.7](https://www.python.org/downloads/release/python-382/) or later
@@ -20,6 +23,7 @@ If there is an error related to the SQL package while running the server, try:
 ```
 pip install mysql-connector-python
 ```
+
 
 ## Running the website locally
 ### Step 1: Download the project
