@@ -64,7 +64,6 @@ The different test commands can get executed in the terminal at `manage.py` leve
     python3 manage.py test booking.tests.test_views.TestViews.test_index_GET  
     ```
 &nbsp; 
-
  Test coverage is implemented, but first you have to install coverage: 
 ```
 pip install coverage.
@@ -79,7 +78,7 @@ To get the report type:
 ```
 coverage report.
 ```
-
+&nbsp; 
 *More about tests and coverage: [Oversikt over kodekvalitet](https://gitlab.stud.idi.ntnu.no/tdt4140-2020/40/-/wikis/Oversikt-over-kodekvalitet)*
 
 ### Break down into end to end tests
