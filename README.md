@@ -6,7 +6,7 @@ This is a website for Skikkelig Fancy Hotell. FILLERTEXT (Ikke ferdig enda)
 
 http://127.0.0.1:8000/booking/
 
-Because the website is run locally, this will be the URL after running the server (Guide on how to do that below)
+Because the website is run locally, this will be the URL to the website after running the server (Guide on how to do that below)
 ## Prerequisites
 
 * [Python 3.7](https://www.python.org/downloads/release/python-382/) or later
