@@ -56,7 +56,18 @@ C:\Users\user_name\Desktop\40-master\fancyhotel python manage.py runserver
 
 ### Running the tests
 
-Tests
+The different test commands can get executed in the terminal at manage.py level.
+
+Running all the tests at once using the command: python (or “python3” depending on python version) manage.py test booking.
+
+If you want to run a specified test write the whole path, ex. python3 manage.py test booking.tests.test_views.TestViews.test_index_GET.
+
+Test coverage is implemented, first you have to install coverage, in the terminal wirte: pip install coverage.
+
+Run the coverage command in the terminal typing: coverage run ./manage.py test booking.
+
+Then to get the report type: coverage report.
+
 
 ### Break down into end to end tests
 
