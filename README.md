@@ -61,7 +61,7 @@ The different test commands can get executed in the terminal at `manage.py` leve
 
 * If you want to run a specified test write the whole path. For example: 
     ```
-    python3 manage.py test booking.tests.test_views.TestViews.test_index_GET  
+    python manage.py test booking.tests.test_views.TestViews.test_index_GET  
     ```
 &nbsp; 
 
