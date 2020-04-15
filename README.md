@@ -68,6 +68,8 @@ Run the coverage command in the terminal typing: coverage run ./manage.py test b
 
 Then to get the report type: coverage report.
 
+More about tests and coverage [Oversikt over kodekvalitet](https://gitlab.stud.idi.ntnu.no/tdt4140-2020/40/-/wikis/Oversikt-over-kodekvalitet)
+
 
 ### Break down into end to end tests
 
