@@ -2,28 +2,22 @@
 
 This is a website for Skikkelig Fancy Hotell. FILLERTEXT (Ikke ferdig enda)
 
-
 ## URL
 
 http://127.0.0.1:8000/booking/
-
-Because the website is run locally, this will be the URL to the website after running the server (Guide on how to do that below)
-
-
+Because the website is run locally, this will be the URL after running the server
 ## Prerequisites
 
 * [Python 3.7](https://www.python.org/downloads/release/python-382/) or later
+* MySQL package for Python. [Read this first.](#Step-2:-Intall-required-pip-packages) Can be installed with the following command:
 
-* MySQL package for Python. Can be installed with the following command:
-
-```
-pip install mysql-connector
-```
-If there is an error related to the SQL package while running the server, try:
-```
-pip install mysql-connector-python
-```
-
+    ```
+    pip install mysql-connector
+    ```
+    If there is an error related to the SQL package while running the server, try:
+    ```
+    pip install mysql-connector-python
+    ```
 
 ## Running the website locally
 ### Step 1: Download the project
@@ -34,12 +28,14 @@ Instead you can also run the command:
 ```
 git clone git@gitlab.stud.idi.ntnu.no:tdt4140-2020/40.git
 ```
+
+
 **Both methods require you to be connected to [NTNU VPN](https://innsida.ntnu.no/wiki/-/wiki/English/Install+vpn)**
 
-### Step 2: Jump to the directory of the project
-This can be done with:
+### Step 2: Intall required pip packages
+To install required pip packages, move to the project directory (where `requirements.txt` is located) and run the following:
 ```
-cd <Path for the project folder>
+pip install -r requirements.txt
 ```
 
 ### Step 3: Run the server locally
@@ -55,21 +51,34 @@ C:\Users\user_name\Desktop\40-master\fancyhotel python manage.py runserver
 ```
 
 ### Running the tests
+The different test commands can get executed in the terminal at `manage.py` level.
 
-The different test commands can get executed in the terminal at manage.py level.
+* Running all the tests at once using the command: 
+    ``` 
+    python (or “python3” depending on python version) manage.py test booking. 
+    ``` 
 
-Running all the tests at once using the command: python (or “python3” depending on python version) manage.py test booking.
+* If you want to run a specified test write the whole path. For example: 
+    ```
+    python3 manage.py test booking.tests.test_views.TestViews.test_index_GET
+    ```
 
-If you want to run a specified test write the whole path, ex. python3 manage.py test booking.tests.test_views.TestViews.test_index_GET.
+ Test coverage is implemented, but first you have to install coverage: 
+```
+pip install coverage.
+```
 
-Test coverage is implemented, first you have to install coverage, in the terminal wirte: pip install coverage.
+Then run the coverage command in the terminal: 
+```
+coverage run ./manage.py test booking.
+```
 
-Run the coverage command in the terminal typing: coverage run ./manage.py test booking.
+To get the report type: 
+```
+coverage report.
+```
 
-Then to get the report type: coverage report.
-
-More about tests and coverage [Oversikt over kodekvalitet](https://gitlab.stud.idi.ntnu.no/tdt4140-2020/40/-/wikis/Oversikt-over-kodekvalitet)
-
+*More about tests and coverage: [Oversikt over kodekvalitet](https://gitlab.stud.idi.ntnu.no/tdt4140-2020/40/-/wikis/Oversikt-over-kodekvalitet)*
 
 ### Break down into end to end tests
 
@@ -92,9 +101,9 @@ Add additional notes about how to deploy this on a live system
 
 ## Contributing
 
-- Magnus Krumbacher
 - 
--
+- 
+- Magnus Krumbacher
 -
 -
 
@@ -113,6 +122,4 @@ See also the list of [contributors](https://github.com/your/project/contributors
 Licence
 
 ## Acknowledgments
-
-
 
