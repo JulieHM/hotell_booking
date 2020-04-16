@@ -190,8 +190,8 @@ def cleaning(request, NUMBER_OF_DAYS):
     
     # Create header-row
     for i in range(NUMBER_OF_DAYS):
-        date = today + timedelta(i)
-        header_row_dates.append(str(date.day) + '/' + str(date.month))
+        _date = today + timedelta(i)
+        header_row_dates.append(str(_date.day) + '/' + str(_date.month))
 
     # Fill busy_dates with NUMBER_OF_DAYS bolean values
     for room in rooms:
