@@ -4,7 +4,8 @@ This is a website for Skikkelig Fancy Hotell AS, a hotell that will launch next 
 
 ## URL
 
-http://127.0.0.1:8000/booking/
+http://127.0.0.1:8000/booking/ - For customers
+http://127.0.0.1:8000/admin/ - For admin
 
 Because the website is run locally, this will be the URL after running the server
 ## Prerequisites
@@ -89,12 +90,12 @@ coverage report
 
 ### Frontend
 
-* [Django](https://www.djangoproject.com/) - The web framework
 * [JavaScript](https://www.javascript.com/) - Frontend programming language
 
 ### Backend
 * [Python](https://www.python.org/) - Backend programming language
 * [MySQL](https://www.mysql.com/) - Database system
+* [Django](https://www.djangoproject.com/) - The web framework
 
 
 
