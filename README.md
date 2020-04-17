@@ -82,7 +82,7 @@ coverage report
 ```
 &nbsp; 
 
-*More about tests and coverage: [Oversikt over kodekvalitet](https://gitlab.stud.idi.ntnu.no/tdt4140-2020/40/-/wikis/Oversikt-over-kodekvalitet)*
+*More about tests and coverage: [Code quality](https://gitlab.stud.idi.ntnu.no/tdt4140-2020/40/-/wikis/Code-quality)*
 
 
 ## Built With
