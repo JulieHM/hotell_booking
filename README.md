@@ -8,7 +8,7 @@ http://127.0.0.1:8000/booking/ - For customers
 
 http://127.0.0.1:8000/admin/ - For admin
 
-Because the website is run locally, this will be the URL after running the server. Read [Running the website locally](#-Running-the-website-locally) below for that.
+Because the website is run locally, this will be the URL after running the server. Read [Running the website locally](#-Running-the-website-locally) below to find out how to run the server.
 ## Prerequisites
 
 * [Python 3.7](https://www.python.org/downloads/release/python-382/) or later
