@@ -4,12 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %} 
+    <link rel="stylesheet" href="{% static "css/base.css" %}">  
+
     <title>Rombestilling</title>
 
 </head>
 <body>
-    {% load crispy_forms_tags %}
+    {% load static %} 
+    {% block header %}
+      <div>
+        <img class="d-block w-100" src="{% static "img/front.jpeg" %}" alt="Third slide" height="400vh" style="overflow: hidden; object-fit: cover;">
+      </div>
+      {% endblock %} 
 
+      {% load crispy_forms_tags %}
     {% block content %}
 
     <script>
@@ -28,6 +37,8 @@
 
 
     <div class="container">
+      <br><br>
+  <h1>Bestill rom</h1>
         <form action="" method="post" novalidate>
             {% csrf_token %}
             <div class="row">
@@ -84,6 +95,7 @@
             <!--<input type="submit" value="Submit">  -->
             <button type="submit" class="btn btn-success">Se tilgjengelighet</button>    
         </form>
+        <br><br>
     </div>
     {% endblock %}
     

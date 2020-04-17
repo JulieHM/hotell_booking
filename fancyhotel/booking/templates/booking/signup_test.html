@@ -7,9 +7,19 @@
     <title>Document</title>
 </head>
 <body>
+    {% load static %} 
+    {% block header %}
+    <div>
+      <img class="d-block w-100" src="{% static "img/restaurant__.jpeg" %}" alt="Third slide">
+    </div>
+    {% endblock %} 
+
     {% load crispy_forms_tags %}
     {% block content %}
-    <div class="container">
+
+
+    <div class="container" id="content-container">
+        <h1>Kunderegistrering</h1>
         <form action="" method="post">
             {% csrf_token %}
             {{ form | crispy }}
@@ -17,6 +27,8 @@
             <button type="sumbit" class="btn btn-secondary">Registrer</button>
         </form>
     </div>
+
+
     {% endblock %}
     
 </body>
