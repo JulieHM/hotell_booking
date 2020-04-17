@@ -24,7 +24,7 @@ Because the website is run locally, this will be the URL after running the serve
 ## Running the website locally
 ### Step 1: Download the project
 
-Go to [the gitlab repository](https://gitlab.stud.iie.ntnu.no/tdt4140-2020/40) and download the projcet as a zip file.
+Go to [the gitlab repository](https://gitlab.stud.iie.ntnu.no/tdt4140-2020/40) and download the project as a zip file.
 
 Instead you can also run the command:
 ```
@@ -34,7 +34,7 @@ git clone git@gitlab.stud.idi.ntnu.no:tdt4140-2020/40.git
 
 **Both methods require you to be connected to [NTNU VPN](https://innsida.ntnu.no/wiki/-/wiki/English/Install+vpn)**
 
-### Step 2: Intall required pip packages
+### Step 2: Install required pip packages
 To install required pip packages, move to the project directory (where `requirements.txt` is located) and run the following:
 ```
 pip install -r requirements.txt
