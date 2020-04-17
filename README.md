@@ -12,7 +12,7 @@ Because the website is run locally, this will be the URL after running the serve
 ## Prerequisites
 
 * [Python 3.7](https://www.python.org/downloads/release/python-382/) or later
-* MySQL package for Python. Can be installed with the following command:
+* MySQL package for Python. Can be installed with the following command (requires pip):
 
     ```
     pip install mysql-connector
